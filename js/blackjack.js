@@ -14,23 +14,19 @@ var deck = function(){
 var new_deck = deck();
 console.log(new_deck.length);
 
-// Ref https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array - Accepted answer - on 12/25/17
+// Ref accepted answer from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array on 12/25/17
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
-
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
-
     // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
-
     // And swap it with the current element.
     temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
-
   return array;
 };
 

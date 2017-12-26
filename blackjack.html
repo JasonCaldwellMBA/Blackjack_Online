@@ -1,10 +1,143 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
+    <!-- Different screen size code -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!-- Web Font -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+    <!-- Social media buttons -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-social.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <!-- Styling and title bar -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="icon" href="images/portrait.jpg" />
     <title> Caldwell | Blackjack </title>
   </head>
   <body>
-    <script type="text/javascript" src="blackjack.js"></script>
+    <!-- ======================= Start Navbar ================================= -->
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+      <a class="navbar-brand" href="http://18.220.208.40/" target="_blank">
+          <img src="images/portrait.jpg" width="30" height="30" class="d-inline-block align-top" alt="Headshot of Jason Caldwell in suit and tie"> Jason Caldwell
+        </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resume
+              </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="http://18.220.208.40/#tech" target="_blank"> Professional Summary </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="http://18.220.208.40/#programming_exp" target="_blank"> Developer Training </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="http://18.220.208.40/#software_exp" target="_blank"> Software Experience </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="http://18.220.208.40/#military_exp" target="_blank"> Military Experience </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="http://18.220.208.40/#other_exp" target="_blank"> Other Experience </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="http://18.220.208.40/#edu" target="_blank"> Education </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="http://18.220.208.40/#other" target="_blank"> Miscellaneous </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="images/Caldwell_Summary_Resume.pdf" target="_blank"> Printable Resume </a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Spring Applications
+              </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="http://18.220.208.40:8080/PizzaParty/" target="_blank">Pizza Party </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="http://18.220.208.40/#group" target="_blank"> Group Projects </a>
+              <a class="dropdown-item" href="http://18.216.132.236:8080/MVCMidtermProject/" target="_blank"> - Equipment Exchange </a>
+              <a class="dropdown-item" href="http://18.216.132.236:8080/USPresidentsWeb/" target="_blank"> - President Information</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Web Sites
+              </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="https://jdcald13.github.io/Basic_Calculator/" target="_blank"> Calculator </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="http://18.220.208.40/" target="_blank"> Personal Website </a>
+              <a class="dropdown-item" href="images/Caldwell_Summary_Resume.pdf" target="_blank"> - Printable Resume </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="https://jdcald13.github.io/" target="_blank"> Learn Java the Hard Way Blog </a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Java Projects
+              </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="https://github.com/jdcald13/BlackJackProject" target="_blank">Blackjack</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="https://github.com/jdcald13/JetsProject" target="_blank">Jets</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="https://github.com/jdcald13/MakeChangeProject" target="_blank">Make Change</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Python Projects
+              </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="https://github.com/jdcald13/Winning_Texas_Holdem_Strategy" target="_blank"> Winning Texas Holdem Strategy </a>
+              <a class="dropdown-item" href="https://github.com/jdcald13/Winning_Texas_Holdem_Strategy/tree/master/BA_design" target="_blank"> - Analyst Design Mockup </a>
+              <a class="dropdown-item" href="https://github.com/jdcald13/Winning_Texas_Holdem_Strategy/tree/master/app" target="_blank"> - Application Code </a>
+              <a class="dropdown-item" href="https://github.com/jdcald13/Winning_Texas_Holdem_Strategy/wiki" target="_blank"> - Documentation </a>
+              <a class="dropdown-item" href="https://github.com/jdcald13/Winning_Texas_Holdem_Strategy/wiki/Game-Instructions" target="_blank"> - Graphical User Interface </a>
+              <a class="dropdown-item" href="https://github.com/jdcald13/Winning_Texas_Holdem_Strategy/tree/master/reports" target="_blank"> - Report Samples </a>
+              <a class="dropdown-item" href="https://github.com/jdcald13/Winning_Texas_Holdem_Strategy/tree/master/tests" target="_blank"> - Test Cases Code </a>
+              <a class="dropdown-item" href="https://github.com/jdcald13/Winning_Texas_Holdem_Strategy/wiki/Testing-Concepts" target="_blank"> - Testing Concepts </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="https://github.com/jdcald13/Guess_the_Number" target="_blank">Guess the Number</a>
+            </div>
+          </li>
+        </ul>
+        <a class="btn btn-social btn-github" href="https://github.com/jdcald13" target="_blank" title="GitHub Repos">
+            <span class="fa fa-github"></span> GitHub
+          </a>
+        <a class="btn btn-social btn-linkedin" href="https://www.linkedin.com/in/jdcald13/" target="_blank" title="LinkedIn">
+            <span class="fa fa-linkedin"></span> LinkedIn
+          </a>
+      </div>
+    </nav>
+    <!-- ============================ End Nav ================================= -->
+
+    <script type="text/javascript" src="js/blackjack.js"></script>
   </body>
+
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <p> No-&copy; 2017
+          <script src="js/footer.js" type="text/javascript"></script>, Jason Caldwell
+        </p>
+      </div>
+
+      <div class="col-md-12 col-xs-12">
+        <p>
+          <a href="https://github.com/jdcald13/Blackjack_Online" target="_blank"> View Code </a> | Connect
+          <a class="btn btn-social-icon btn-github" href="https://github.com/jdcald13" target="_blank" title="GitHub Repos">
+             <span class="fa fa-github"></span>
+           </a>
+          <a class="btn btn-social-icon btn-linkedin" href="https://www.linkedin.com/in/jdcald13/" target="_blank" title="LinkedIn">
+             <span class="fa fa-linkedin"></span>
+           </a>
+        </p>
+      </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </html>
