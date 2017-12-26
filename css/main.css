@@ -15,6 +15,11 @@ body {
   background-color: darkgreen;
 }
 
+#rules {
+  color: white;
+  text-align: center;
+}
+
 footer {
   font-size: 16px;
   text-align: center;

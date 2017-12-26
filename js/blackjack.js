@@ -2,6 +2,21 @@ var rank = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
 var suit = ["c", "d", "h", "s"];
 var cards = [];
 
+var player = {
+  name : 'Player',
+  bankroll : 100,
+  bet_size : 2,
+  hand : []
+};
+
+var dealer = {
+  name : 'Jason',
+  hand : []
+};
+
+$('#dealer_name').text(dealer.name + ", the Dealer's Hand");
+$('#player_name').text(player.name + "'s Hand");
+
 var deck = function(){
   for (var r = 0; r < rank.length; r++) {
     for (var s = 0; s < suit.length; s++) {
@@ -37,13 +52,26 @@ function dealHand(){
   return cards.shift();
 }
 
-var c1 = dealHand();
-var c2 = dealHand();
-var c3 = dealHand();
-var c4 = dealHand();
+player.hand.push(dealHand());
+dealer.hand.push(dealHand());
+player.hand.push(dealHand());
+console.log(player.hand);
+console.log(dealer.hand);
 
-console.log("Players's hand: " + c1 + c3);
-console.log("Dealer's hand: " + c2 + c4);
+dealer.hand.push(dealHand());
+console.log(dealer.hand);
+
+
+function displayCard(card) {
+  var image_location = '<img src="images/cards/' + card + '.png" alt=Playing card ' + card + '>';
+  return image_location;
+}
+
+$('#player_hand').append(displayCard(player.hand[0]));
+$('#dealer_hand').append(displayCard(dealer.hand[0]));
+$('#player_hand').append(displayCard(player.hand[1]));
+//document.write(displayCard(player.hand[0]));
+
 
 console.log("Remaining deck: ");
 console.log(cards);
