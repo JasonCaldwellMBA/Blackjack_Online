@@ -11,66 +11,11 @@ body {
   margin: 5px;
 }
 
-h1 {
-  text-align: center;
-  font-size: 300%;
-}
-
-table {
-  background-color: black;
-  background-color: white;
-  text-align: center;
-  font-size: 300%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.operator {
-  color: white;
-  background-color: blue;
-}
-
-tr {
-  background-color: white;
-}
-
-td {
-  width: 85px;
-  height: 85px;
-}
-
-#decimal, #negate {
-  background-color: white;
-  color: black;
-}
-
-.black {
-  background-color: black;
-  color: white;
-}
-
-#display {
-  height: 85px;
-  background-color: lightgrey;
-}
-
-p {
-  text-align: center;
+#card_table {
+  background-color: darkgreen;
 }
 
 footer {
   font-size: 16px;
   text-align: center;
-}
-
-#mocha-stats {
-  display: none;
-}
-
-#mocha .test a.replay {
-  display: none;
-}
-
-#mocha {
-  margin: 0px;
 }
