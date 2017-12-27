@@ -1,6 +1,8 @@
 var rank = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
 var suit = ["c", "d", "h", "s"];
 var cards = [];
+var hand_num = 1;
+var score = 0;
 
 var player = {
   name : 'Player',
@@ -10,11 +12,11 @@ var player = {
 };
 
 var dealer = {
-  name : 'Jason',
+  name : 'Dealer',
   hand : []
 };
 
-$('#dealer_name').text(dealer.name + ", the Dealer's Hand Value: ");
+$('#dealer_name').text(dealer.name + "'s Hand Value: ");
 $('#player_name').text(player.name + "'s Hand Value: ");
 
 var deck = function(){
@@ -45,11 +47,14 @@ function shuffle(array) {
 };
 
 function placeBet(){
-  var bet = 5;
+  var bet = player.bet_size;
   return bet;
 }
 
 $('#bet').children().append(placeBet());
+$('#score').children().append(score);
+$('#hand_num').children().append(hand_num);
+$('#bankroll').children().append(player.bankroll);
 
 shuffle(new_deck);
 console.log(new_deck);

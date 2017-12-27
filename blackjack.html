@@ -117,21 +117,21 @@
   <!-- ============================ End Nav ================================= -->
 
   <div id="card_table">
+    <section class="container">
     <div id="dealer">
       <h2 id="dealer_name"></h2>
       <div id="dealer_hand"></div>
     </div>
     <br>
     <div class="row">
-      <div id="rules" class="col-lg-6">
+      <div id="rules" class="col-sm-8">
         <p> Black Jack Pays 3 To 2 <br>
-           The dealer must draw to 16, and stand on all 17's <br>
+           The dealer must hit on soft 17's <br>
             Insurance Pays 2 To 1
         </p>
       </div>
-      <div id="bet" class="col-lg-6">
-        <p> Bet Amount: <br>
-           $
+      <div id="bet" class="col-sm-4">
+        <p> Bet Amount: $
         </p>
       </div>
     </div>
@@ -139,6 +139,25 @@
       <h2 id="player_name"></h2>
       <div id="player_hand"></div>
     </div>
+    <br>
+    <div class="row actions">
+      <div id="stand" class="col-sm-3"> Stand </div>
+      <div id="hit" class="col-sm-3"> Hit </div>
+      <div id="double" class="col-sm-3"> Double </div>
+      <div id="split" class="col-sm-3"> Split </div>
+    </div>
+    <div class="row stats">
+      <div id="hand_num" class="col-sm-4">
+        <p> Hand Number: </p>
+      </div>
+      <div id="bankroll" class="col-sm-4">
+        <p> Bankroll: $ </p>
+      </div>
+      <div id="score" class="col-sm-4">
+        <p> Score: </p>
+      </div>
+    </div>
+  </section>
   </div>
   <script type="text/javascript" src="js/blackjack.js"></script>
 </body>
