@@ -146,35 +146,60 @@ function dealer_bj_check(dv){
 function stand_button(){
   var button_stand = document.createElement("button");
   button_stand.innerHTML = "Stand";
+
   $("#stand").append(button_stand);
+
+  button_stand.addEventListener ("click", function() {
+    alert("stand");
+  });
 }
 
 // Create hit button
 function hit_button(){
   var button_hit = document.createElement("button");
   button_hit.innerHTML = "Hit";
+
   $("#hit").append(button_hit);
+
+  button_hit.addEventListener ("click", function() {
+    alert("hit");
+  });
 }
 
 // Create double button - only available first round
 function double_button(){
   var button_double = document.createElement("button");
   button_double.innerHTML = "Double";
+
   $("#double").append(button_double);
+
+  button_double.addEventListener ("click", function() {
+    alert("double");
+  });
 }
 
 // Create split button
 function split_button(){
   var button_split = document.createElement("button");
   button_split.innerHTML = "Split";
+
   $("#split").append(button_split);
+
+  button_split.addEventListener ("click", function() {
+    alert("split");
+  });
 }
 
 // Create hint button
 function hint_button(){
   var button_hint = document.createElement("button");
   button_hint.innerHTML = "Hint";
+
   $("#hint").append(button_hint);
+
+  button_hint.addEventListener ("click", function() {
+    alert("hint");
+  });
 }
 
 // // Create stats button
@@ -182,6 +207,10 @@ function hint_button(){
 //   var button_leave = document.createElement("button");
 //   button_leave.innerHTML = "Leave";
 //   $("#stats").append(button_leave);
+//
+// button_stand.addEventListener ("click", function() {
+//   alert("stand");
+// });
 // }
 
 // Create stats section
