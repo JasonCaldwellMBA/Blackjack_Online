@@ -14,8 +14,8 @@ var dealer = {
   hand : []
 };
 
-$('#dealer_name').text(dealer.name + ", the Dealer's Hand");
-$('#player_name').text(player.name + "'s Hand");
+$('#dealer_name').text(dealer.name + ", the Dealer's Hand Value: ");
+$('#player_name').text(player.name + "'s Hand Value: ");
 
 var deck = function(){
   for (var r = 0; r < rank.length; r++) {
@@ -57,8 +57,6 @@ player.hand.push(dealHand());
 console.log(player.hand);
 console.log(dealer.hand);
 
-dealer.hand.push(dealHand());
-console.log(dealer.hand);
 
 
 function displayCard(card) {
@@ -69,8 +67,6 @@ function displayCard(card) {
 $('#player_hand').append(displayCard(player.hand[0]));
 $('#dealer_hand').append(displayCard(dealer.hand[0]));
 $('#player_hand').append(displayCard(player.hand[1]));
-
-console.log(player.hand[0][0]);
 
 function handValue(hand){
   var value = 0;
@@ -104,17 +100,19 @@ function handValue(hand){
   while (aces > 0){
     if (value > 21){
       value -= 10;
-      aces--;
     }
+    aces--;
   }
   console.log(value);
   console.log(aces);
   return value;
 }
 
-handValue(player.hand);
-handValue(dealer.hand);
+$('#player_name').append(handValue(player.hand));
+$('#dealer_name').append(handValue(dealer.hand));
 
+dealer.hand.push(dealHand());
+console.log(dealer.hand);
 
 console.log("Remaining deck: ");
 console.log(cards);
