@@ -44,6 +44,13 @@ function shuffle(array) {
   return array;
 };
 
+function placeBet(){
+  var bet = 5;
+  return bet;
+}
+
+$('#bet').children().append(placeBet());
+
 shuffle(new_deck);
 console.log(new_deck);
 
@@ -56,8 +63,6 @@ dealer.hand.push(dealHand());
 player.hand.push(dealHand());
 console.log(player.hand);
 console.log(dealer.hand);
-
-
 
 function displayCard(card) {
   var image_location = '<img src="images/cards/' + card + '.png" alt=Playing card ' + card + '>';

@@ -15,7 +15,7 @@ body {
   background-color: darkgreen;
 }
 
-#rules {
+#rules, #bet {
   color: white;
   text-align: center;
 }
