@@ -202,17 +202,6 @@ function hint_button(){
   });
 }
 
-// // Create stats button
-// function stats_button(){
-//   var button_leave = document.createElement("button");
-//   button_leave.innerHTML = "Leave";
-//   $("#stats").append(button_leave);
-//
-// button_stand.addEventListener ("click", function() {
-//   alert("stand");
-// });
-// }
-
 // Create stats section
 function stats() {
   $('#bet').children().append(placeBet());
