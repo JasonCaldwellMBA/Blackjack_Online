@@ -8,12 +8,14 @@ var player = {
   name : 'Player',
   bankroll : 100,
   bet_size : 2,
-  hand : []
+  hand : [],
+  wins : false
 };
 
 var dealer = {
   name : 'Dealer',
-  hand : []
+  hand : [],
+  wins : false
 };
 
 // Place bet - Will be interactive in future
@@ -123,19 +125,40 @@ var initialDeal = function() {
   }
 
   var pv = handValue(player.hand);
+  var dv = handValue(dealer.hand);
 
   $('#player_name').append(pv);
-  $('#dealer_name').append(handValue(dealer.hand));
+  $('#dealer_name').append(dv);
 
   // Player blackjack check
   if (pv === 21){
     document.write("Congrats, you win with blackjack!");
     player.bankroll += player.bet_size * 1.5;
+    player.wins === true;
   }
 
   // Deal final dealer card
   dealer.hand.push(dealHand());
   console.log(dealer.hand);
+  dv = handValue(dealer.hand);
+
+  // Offer insurance if dealer's first card was an A
+  if (dealer.hand[0][0] === 'A') {
+    if (confirm("Do you want to buy insurance?")){
+      document.write("Hint: You never want to buy insurance in blackjack. It is always unprofitable and therefore you cannot buy it in this game.");
+    }
+    else {
+      document.write("Good decision. Buying insurance in blackjack is a losing play over the long run.");
+    }
+  }
+
+  // Check to see if the dealer has blackjack
+  if (dv === 21){
+    document.write("Sorry, the dealer has blackjack.");
+    player.bankroll -= player.bet_size;
+    dealer.wins === true;
+  }
+
 
   // Create action buttons - some of these are only available on first action
   var button_stand = document.createElement("button");
