@@ -6,8 +6,8 @@ var score = 0;
 // Create player and dealer
 var player = {
   name : 'Player',
-  bankroll : 100,
-  bet_size : 2,
+  bankroll : 100.00,
+  bet_size : 2.00,
   hand : [],
   wins : false
 };
@@ -159,7 +159,6 @@ var initialDeal = function() {
     dealer.wins === true;
   }
 
-
   // Create action buttons - some of these are only available on first action
   var button_stand = document.createElement("button");
   button_stand.innerHTML = "Stand";
@@ -169,13 +168,17 @@ var initialDeal = function() {
   button_double.innerHTML = "Double";
   var button_split = document.createElement("button");
   button_split.innerHTML = "Split";
+  var button_hint = document.createElement("button");
+  button_hint.innerHTML = "Hint";
+  var button_leave = document.createElement("button");
+  button_leave.innerHTML = "Leave";
 
   $("#stand").append(button_stand);
   $("#hit").append(button_hit);
   $("#double").append(button_double);
   $("#split").append(button_split);
-
-
+  $("#hint").append(button_hint);
+  $("#leave").append(button_leave);
 };
 
 // Start game
