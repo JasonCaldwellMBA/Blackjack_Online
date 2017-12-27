@@ -27,7 +27,6 @@ var deck = function(){
 }
 
 var new_deck = deck();
-console.log(new_deck.length);
 
 // Ref accepted answer from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array on 12/25/17
 function shuffle(array) {
@@ -70,7 +69,51 @@ function displayCard(card) {
 $('#player_hand').append(displayCard(player.hand[0]));
 $('#dealer_hand').append(displayCard(dealer.hand[0]));
 $('#player_hand').append(displayCard(player.hand[1]));
-//document.write(displayCard(player.hand[0]));
+
+console.log(player.hand[0][0]);
+
+function handValue(hand){
+  var value = 0;
+  var aces = 0;
+  for (var i = 0; i < hand.length; i++){
+    switch (hand[i][0]) {
+      case '2':
+        value += 2; break;
+      case '3':
+        value += 3; break;
+      case '4':
+        value += 4; break;
+      case '5':
+        value += 5; break;
+      case '6':
+        value += 6; break;
+      case '7':
+        value += 7; break;
+      case '8':
+        value += 8; break;
+      case '9':
+        value += 9; break;
+      default:
+        value += 10; break;
+      case 'A':
+        value += 11;
+        aces += 1;
+        break;
+    }
+  }
+  while (aces > 0){
+    if (value > 21){
+      value -= 10;
+      aces--;
+    }
+  }
+  console.log(value);
+  console.log(aces);
+  return value;
+}
+
+handValue(player.hand);
+handValue(dealer.hand);
 
 
 console.log("Remaining deck: ");
