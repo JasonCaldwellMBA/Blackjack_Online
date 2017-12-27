@@ -25,6 +25,20 @@ body {
   text-align: center;
 }
 
+button {
+  line-height: 60px;
+  font-weight: bold;
+  padding: 0 40px;
+  background: lightblue;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: blue;
+  color: white;
+}
+
 footer {
   font-size: 16px;
   text-align: center;

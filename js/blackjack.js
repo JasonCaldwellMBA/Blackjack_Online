@@ -16,6 +16,22 @@ var dealer = {
   hand : []
 };
 
+var button_stand = document.createElement("button");
+button_stand.innerHTML = "Stand";
+var button_hit = document.createElement("button");
+button_hit.innerHTML = "Hit";
+var button_double = document.createElement("button");
+button_double.innerHTML = "Double";
+var button_split = document.createElement("button");
+button_split.innerHTML = "Split";
+
+$("#stand").append(button_stand);
+$("#hit").append(button_hit);
+$("#double").append(button_double);
+$("#split").append(button_split);
+// var body = document.getElementsByTagName("body")[0];
+// body.appendChild(button);
+
 $('#dealer_name').text(dealer.name + "'s Hand Value: ");
 $('#player_name').text(player.name + "'s Hand Value: ");
 
