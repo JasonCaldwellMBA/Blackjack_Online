@@ -31,6 +31,8 @@ var button_split = document.createElement("button");
 button_split.innerHTML = "Split";
 var button_hint = document.createElement("button");
 button_hint.innerHTML = "Hint";
+var button_deal = document.createElement("button");
+button_deal.innerHTML = "Deal";
 
 // Place bet - Will be interactive in future
 function place_bet(multiple){
@@ -150,7 +152,7 @@ function player_bj_check(pv){
 function insurance_offer(){
   if (dealer.hand[0][0] === 'A') {
     $('#winner').text('');
-    $('#winner').text("Usually you would be offerred insurance since the dealer has an ace showing. This is almost always unprofitable and therefore isn't offerred.");
+    $('#winner').text("Insurance is almost always unprofitable and therefore isn't offerred.");
   }
 }
 
@@ -285,6 +287,15 @@ function hint_button(){
   });
 }
 
+// Create deal event
+function deal_button(){
+  $("#new_deal").append(button_deal);
+
+  button_deal.addEventListener ("click", function() {
+    alert("deal");
+  });
+}
+
 // Create stats section
 function stats() {
   $('#score').children().text('');
@@ -338,6 +349,7 @@ var initial_deal = function() {
     button_split.disabled = true;
   }
   hint_button();
+  deal_button();
 
   stats();
 };
