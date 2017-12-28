@@ -217,6 +217,7 @@ var initial_deal = function() {
   $('#dealer_name').text(dealer.name + "'s Hand Value: ");
   $('#player_name').text(player.name + "'s Hand Value: ");
 
+  // Deal first three cards face up (2 to player and 1 to dealer)
   player.hand.push(dealHand());
   dealer.hand.push(dealHand());
   player.hand.push(dealHand());
@@ -246,7 +247,9 @@ var initial_deal = function() {
   stand_button();
   hit_button();
   double_button();
-  split_button();
+  if (player.hand[0][0] === player.hand[1][0]){
+    split_button();
+  }
   hint_button();
 
   stats();
