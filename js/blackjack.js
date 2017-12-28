@@ -18,6 +18,18 @@ var dealer = {
   wins : false
 };
 
+//Create action/event buttons
+var button_stand = document.createElement("button");
+button_stand.innerHTML = "Stand";
+var button_hit = document.createElement("button");
+button_hit.innerHTML = "Hit";
+var button_double = document.createElement("button");
+button_double.innerHTML = "Double";
+var button_split = document.createElement("button");
+button_split.innerHTML = "Split";
+var button_hint = document.createElement("button");
+button_hint.innerHTML = "Hint";
+
 // Place bet - Will be interactive in future
 function placeBet(){
   var bet = player.bet_size;
@@ -118,6 +130,11 @@ function player_bj_check(pv){
     document.write("Congrats, you win with blackjack!");
     player.bankroll += player.bet_size * 1.5;
     player.wins = true;
+    button_stand.disabled = true;
+    button_hit.disabled = true;
+    button_double.disabled = true;
+    button_split.disabled = true;
+    button_hint.disabled = true;
   }
 }
 
@@ -139,26 +156,30 @@ function dealer_bj_check(dv){
     document.write("Sorry, the dealer has blackjack.");
     player.bankroll -= player.bet_size;
     dealer.wins = true;
+    button_stand.disabled = true;
+    button_hit.disabled = true;
+    button_double.disabled = true;
+    button_split.disabled = true;
+    button_hint.disabled = true;
   }
 }
 
-// Create stand button
+// Create stand event
 function stand_button(){
-  var button_stand = document.createElement("button");
-  button_stand.innerHTML = "Stand";
-
   $("#stand").append(button_stand);
 
   button_stand.addEventListener ("click", function() {
     dealer_turn();
+    button_stand.disabled = true;
+    button_hit.disabled = true;
+    button_double.disabled = true;
+    button_split.disabled = true;
+    button_hint.disabled = true;
   });
 }
 
-// Create hit button
+// Create hit event
 function hit_button(){
-  var button_hit = document.createElement("button");
-  button_hit.innerHTML = "Hit";
-
   $("#hit").append(button_hit);
 
   button_hit.addEventListener ("click", function() {
@@ -166,14 +187,13 @@ function hit_button(){
     $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
     var pv = handValue(player.hand);
     $('#player_name').append(' -> ' + pv);
+    button_double.disabled = true;
+    button_split.disabled = true;
   });
 }
 
-// Create double button - only available first round
+// Create double event - only available first round
 function double_button(){
-  var button_double = document.createElement("button");
-  button_double.innerHTML = "Double";
-
   $("#double").append(button_double);
 
   button_double.addEventListener ("click", function() {
@@ -182,26 +202,26 @@ function double_button(){
     var pv = handValue(player.hand);
     $('#player_name').append(' -> ' + pv);
     dealer_turn();
+    button_stand.disabled = true;
+    button_hit.disabled = true;
+    button_double.disabled = true;
+    button_split.disabled = true;
+    button_hint.disabled = true;
   });
 }
 
-// Create split button
+// Create split event
 function split_button(){
-  var button_split = document.createElement("button");
-  button_split.innerHTML = "Split";
-
   $("#split").append(button_split);
 
   button_split.addEventListener ("click", function() {
     alert("split");
+    // This is going to be complicated
   });
 }
 
-// Create hint button
+// Create hint event
 function hint_button(){
-  var button_hint = document.createElement("button");
-  button_hint.innerHTML = "Hint";
-
   $("#hint").append(button_hint);
 
   button_hint.addEventListener ("click", function() {
@@ -254,8 +274,9 @@ var initial_deal = function() {
   stand_button();
   hit_button();
   double_button();
-  if (player.hand[0][0] === player.hand[1][0]){
-    split_button();
+  split_button();
+  if (!(player.hand[0][0] === player.hand[1][0])){
+    button_split.disabled = true;
   }
   hint_button();
 
