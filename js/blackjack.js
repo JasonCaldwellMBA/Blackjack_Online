@@ -9,7 +9,8 @@ var player = {
   bankroll : 100.00,
   bet_size : 2.00,
   hand : [],
-  wins : false
+  wins : false,
+  end_turn : false
 };
 
 var dealer = {
@@ -150,7 +151,8 @@ function stand_button(){
   $("#stand").append(button_stand);
 
   button_stand.addEventListener ("click", function() {
-    alert("stand");
+    player.end_turn = true;
+    console.log(player.end_turn);
   });
 }
 
@@ -162,7 +164,9 @@ function hit_button(){
   $("#hit").append(button_hit);
 
   button_hit.addEventListener ("click", function() {
-    alert("hit");
+    console.log("hit");
+    dealHand();
+    console.log(cards);
   });
 }
 
@@ -174,7 +178,11 @@ function double_button(){
   $("#double").append(button_double);
 
   button_double.addEventListener ("click", function() {
-    alert("double");
+    player.hand.push(dealHand());
+    $('#player_hand').append(displayCard(player.hand[2]));
+    var pv = handValue(player.hand);
+    $('#player_name').append(' -> ' + pv);
+    player.end_turn = true;
   });
 }
 
