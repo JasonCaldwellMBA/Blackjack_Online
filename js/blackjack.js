@@ -162,9 +162,10 @@ function hit_button(){
   $("#hit").append(button_hit);
 
   button_hit.addEventListener ("click", function() {
-    console.log("hit");
-    dealHand();
-    console.log(cards);
+    player.hand.push(dealHand());
+    $('#player_hand').append(displayCard(player.hand[player.hand.length - 1]));
+    var pv = handValue(player.hand);
+    $('#player_name').append(' -> ' + pv);
   });
 }
 
@@ -177,7 +178,7 @@ function double_button(){
 
   button_double.addEventListener ("click", function() {
     player.hand.push(dealHand());
-    $('#player_hand').append(displayCard(player.hand[2]));
+    $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
     var pv = handValue(player.hand);
     $('#player_name').append(' -> ' + pv);
     dealer_turn();
@@ -225,14 +226,14 @@ var initial_deal = function() {
 
   // Deal first three cards face up (2 to player and 1 to dealer)
   player.hand.push(dealHand());
+  $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
   dealer.hand.push(dealHand());
+  $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
   player.hand.push(dealHand());
+  $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
+
   console.log(player.hand);
   console.log(dealer.hand);
-
-  $('#player_hand').append(displayCard(player.hand[0]));
-  $('#dealer_hand').append(displayCard(dealer.hand[0]));
-  $('#player_hand').append(displayCard(player.hand[1]));
 
   var pv = handValue(player.hand);
   var dv = handValue(dealer.hand);
@@ -262,16 +263,14 @@ var initial_deal = function() {
 };
 
 function dealer_turn() {
-  $('#dealer_hand').append(displayCard(dealer.hand[1]));
+  $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
   var dv = handValue(dealer.hand);
   $('#dealer_name').append(' -> ' + dv);
-  var i = 2;
   while (dv < 17) {
     dealer.hand.push(dealHand());
-    $('#dealer_hand').append(displayCard(dealer.hand[i]));
+    $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
     var dv = handValue(dealer.hand);
     $('#dealer_name').append(' -> ' + dv);
-    i++;
   }
 }
 
