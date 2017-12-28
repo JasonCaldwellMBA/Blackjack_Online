@@ -128,16 +128,20 @@ function handValue(hand){
   return value;
 }
 
+function disable_all_buttons() {
+  button_stand.disabled = true;
+  button_hit.disabled = true;
+  button_double.disabled = true;
+  button_split.disabled = true;
+  button_hint.disabled = true;
+}
+
 // Player blackjack check
 function player_bj_check(pv){
   if (pv === 21){
     player.blackjack = true;
     player.wins = true;
-    button_stand.disabled = true;
-    button_hit.disabled = true;
-    button_double.disabled = true;
-    button_split.disabled = true;
-    button_hint.disabled = true;
+    disable_all_buttons()
     determine_winner();
   }
 }
@@ -160,11 +164,7 @@ function dealer_bj_check(dv){
   if (dv === 21){
     dealer.blackjack = true;
     dealer.wins = true;
-    button_stand.disabled = true;
-    button_hit.disabled = true;
-    button_double.disabled = true;
-    button_split.disabled = true;
-    button_hint.disabled = true;
+    disable_all_buttons()
     determine_winner();
   }
 }
@@ -174,11 +174,7 @@ function stand_button(){
   $("#stand").append(button_stand);
 
   button_stand.addEventListener ("click", function() {
-    button_stand.disabled = true;
-    button_hit.disabled = true;
-    button_double.disabled = true;
-    button_split.disabled = true;
-    button_hint.disabled = true;
+    disable_all_buttons()
     dealer_turn();
   });
 }
@@ -209,11 +205,7 @@ function double_button(){
     $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
     var pv = handValue(player.hand);
     $('#player_name').append(' -> ' + pv);
-    button_stand.disabled = true;
-    button_hit.disabled = true;
-    button_double.disabled = true;
-    button_split.disabled = true;
-    button_hint.disabled = true;
+    disable_all_buttons()
     player_turn();
     dealer_turn();
   });
@@ -360,11 +352,7 @@ function player_turn(){
   $('#winner').text('');
   if (handValue(player.hand) > 21) {
     dealer.wins = true;
-    button_stand.disabled = true;
-    button_hit.disabled = true;
-    button_double.disabled = true;
-    button_split.disabled = true;
-    button_hint.disabled = true;
+    disable_all_buttons()
     determine_winner();
   }
 }
@@ -443,8 +431,9 @@ function determine_winner() {
 // Start game
 initial_deal();
 
-console.log("Remaining deck: ");
-console.log(cards);
+// For testing
+// console.log("Remaining deck: ");
+// console.log(cards);
 
 // console.log("Validate count of deck")
 // while( (i = cards.shift()) !== undefined ) {
