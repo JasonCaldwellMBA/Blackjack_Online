@@ -33,7 +33,7 @@ var button_hint = document.createElement("button");
 button_hint.innerHTML = "Hint";
 
 // Place bet - Will be interactive in future
-function placeBet(){
+function place_bet(){
   var bet = player.bet_size;
   $('#bet').children().append(bet);
   return bet;
@@ -307,6 +307,7 @@ function stats() {
 
 // Setup game
 var initial_deal = function() {
+  var amount = place_bet();
   create_shuffled_deck();
 
   $('#dealer_name').text(dealer.name + "'s Hand Value: ");
@@ -352,7 +353,7 @@ var initial_deal = function() {
 };
 
 function player_turn(){
-  $('#winner').text();
+  $('#winner').text('');
   if (handValue(player.hand) > 21) {
     dealer.wins = true;
     button_stand.disabled = true;
