@@ -35,7 +35,8 @@ button_hint.innerHTML = "Hint";
 // Place bet - Will be interactive in future
 function place_bet(){
   var bet = player.bet_size;
-  $('#bet').children().append(bet);
+  $('#bet').children().text('');
+  $('#bet').children().text('Bet Amount: $' + bet);
   return bet;
 }
 
