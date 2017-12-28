@@ -10,12 +10,14 @@ var player = {
   bet_size : 2.00,
   hand : [],
   wins : false,
+  blackjack : false
 };
 
 var dealer = {
   name : 'Dealer',
   hand : [],
-  wins : false
+  wins : false,
+  blackjack : false
 };
 
 //Create action/event buttons
@@ -33,6 +35,7 @@ button_hint.innerHTML = "Hint";
 // Place bet - Will be interactive in future
 function placeBet(){
   var bet = player.bet_size;
+  $('#bet').children().append(bet);
   return bet;
 }
 
@@ -127,16 +130,14 @@ function handValue(hand){
 // Player blackjack check
 function player_bj_check(pv){
   if (pv === 21){
-    var amount = player.bet_size * 1.5;
-    $('#winner').text("Congrats, you win $" + amount + " with blackjack!")
-    //document.write("Congrats, you win with blackjack!");
-    player.bankroll += amount;
+    player.blackjack = true;
     player.wins = true;
     button_stand.disabled = true;
     button_hit.disabled = true;
     button_double.disabled = true;
     button_split.disabled = true;
     button_hint.disabled = true;
+    determine_winner();
   }
 }
 
@@ -156,15 +157,14 @@ function insurance_offer(){
 // Check to see if the dealer has blackjack
 function dealer_bj_check(dv){
   if (dv === 21){
-    $('#winner').text("Dealer wins with blackjack.")
-    //document.write("Sorry, the dealer has blackjack.");
-    player.bankroll -= player.bet_size;
+    dealer.blackjack = true;
     dealer.wins = true;
     button_stand.disabled = true;
     button_hit.disabled = true;
     button_double.disabled = true;
     button_split.disabled = true;
     button_hint.disabled = true;
+    determine_winner();
   }
 }
 
@@ -239,10 +239,9 @@ function hint_button(){
 
 // Create stats section
 function stats() {
-  $('#bet').children().append(placeBet());
-  $('#score').children().append(score);
-  $('#hand_num').children().append(hand_num);
-  $('#bankroll').children().append(player.bankroll);
+  $('#score').children().text(score);
+  $('#hand_num').children().text(hand_num);
+  $('#bankroll').children().text(player.bankroll);
 }
 
 // Setup game
@@ -299,11 +298,11 @@ function player_turn(){
     button_double.disabled = true;
     button_split.disabled = true;
     button_hint.disabled = true;
+    determine_winner();
   }
 }
 
 function dealer_turn() {
-  console.log(dealer.wins);
   if (!(dealer.wins)) {
     $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
     var dv = handValue(dealer.hand);
@@ -314,12 +313,62 @@ function dealer_turn() {
       var dv = handValue(dealer.hand);
       $('#dealer_name').append(' -> ' + dv);
     }
+    if (dv > 21) {
+      player.wins = true;
+    }
   }
+  determine_winner();
+}
+
+function determine_winner() {
+  if (player.blackjack) {
+    var amount = player.bet_size * 1.5;
+    $('#winner').text("Congrats, you win $" + amount + " with blackjack!")
+    player.bankroll += amount;
+  }
+  else if (dealer.blackjack) {
+    $('#winner').text("Sorry, dealer wins with blackjack.")
+    player.bankroll -= player.bet_size;
+  }
+  else if (dealer.wins) {
+    $('#winner').text("Sorry, dealer wins.")
+    player.bankroll -= player.bet_size;
+  }
+  else if (player.wins){
+    $('#winner').text("Player wins!")
+    player.bankroll += player.bet_size;
+  }
+  else if (handValue(dealer.hand) > handValue(player.hand)) {
+    $('#winner').text("Sorry, dealer wins.")
+    player.bankroll -= player.bet_size;
+  }
+  else if (handValue(dealer.hand) < handValue(player.hand)) {
+    $('#winner').text("Player wins!")
+    player.bankroll += player.bet_size;
+  }
+  else if (handValue(dealer.hand) === handValue(player.hand)) {
+    $('#winner').text("It's a push (tie).")
+    // No change to bankroll
+  }
+  else{
+    console.log("unknown winner")
+  }
+  hand_num++;
+  stats();
+  // player.blackjack = false;
+  // dealer.blackjack = false;
+  // player.wins = false;
+  // dealer.wins = false;
+  // button_stand.disabled = false;
+  // button_hit.disabled = false;
+  // button_double.disabled = false;
+  // button_split.disabled = false;
+  // button_hint.disabled = false;
+  // initial_deal();
 }
 
 // Start game
 initial_deal();
-
 
 console.log("Remaining deck: ");
 console.log(cards);
