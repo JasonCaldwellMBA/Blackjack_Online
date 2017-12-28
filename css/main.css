@@ -15,13 +15,18 @@ body {
   background-color: darkgreen;
 }
 
-#rules, #bet {
+#rules {
   color: white;
   text-align: center;
 }
 
-.stats {
+.stats, #bet {
   color: yellow;
+  text-align: center;
+}
+
+#winner {
+  color: red;
   text-align: center;
 }
 

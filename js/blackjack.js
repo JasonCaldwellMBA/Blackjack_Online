@@ -127,8 +127,10 @@ function handValue(hand){
 // Player blackjack check
 function player_bj_check(pv){
   if (pv === 21){
-    document.write("Congrats, you win with blackjack!");
-    player.bankroll += player.bet_size * 1.5;
+    var amount = player.bet_size * 1.5;
+    $('#winner').text("Congrats, you win $" + amount + " with blackjack!")
+    //document.write("Congrats, you win with blackjack!");
+    player.bankroll += amount;
     player.wins = true;
     button_stand.disabled = true;
     button_hit.disabled = true;
@@ -140,6 +142,7 @@ function player_bj_check(pv){
 
 // Offer insurance if dealer's first card was an A
 function insurance_offer(){
+  // Refactor this in future - don't like confirm functionality - allow buying even though it is a bad decision
   if (dealer.hand[0][0] === 'A') {
     if (confirm("Do you want to buy insurance?")){
       document.write("Hint: You very rarely want to buy insurance in blackjack. It is always unprofitable based off of the odds given in this game and therefore you cannot buy it.");
@@ -153,7 +156,8 @@ function insurance_offer(){
 // Check to see if the dealer has blackjack
 function dealer_bj_check(dv){
   if (dv === 21){
-    document.write("Sorry, the dealer has blackjack.");
+    $('#winner').text("Dealer wins with blackjack.")
+    //document.write("Sorry, the dealer has blackjack.");
     player.bankroll -= player.bet_size;
     dealer.wins = true;
     button_stand.disabled = true;
@@ -198,6 +202,8 @@ function double_button(){
   $("#double").append(button_double);
 
   button_double.addEventListener ("click", function() {
+    // player.bet *= 2;
+    // $('#bet').children().append(player.bet);
     player.hand.push(dealHand());
     $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
     var pv = handValue(player.hand);
