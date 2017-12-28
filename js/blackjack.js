@@ -117,7 +117,7 @@ function player_bj_check(pv){
   if (pv === 21){
     document.write("Congrats, you win with blackjack!");
     player.bankroll += player.bet_size * 1.5;
-    player.wins === true;
+    player.wins = true;
   }
 }
 
@@ -125,10 +125,10 @@ function player_bj_check(pv){
 function insurance_offer(){
   if (dealer.hand[0][0] === 'A') {
     if (confirm("Do you want to buy insurance?")){
-      document.write("Hint: You never want to buy insurance in blackjack. It is always unprofitable and therefore you cannot buy it in this game.");
+      document.write("Hint: You very rarely want to buy insurance in blackjack. It is always unprofitable based off of the odds given in this game and therefore you cannot buy it.");
     }
     else {
-      document.write("Good decision. Buying insurance in blackjack is a losing play over the long run.");
+      document.write("Good decision. Buying insurance in blackjack is almost always a losing play over the long run.");
     }
   }
 }
@@ -138,7 +138,7 @@ function dealer_bj_check(dv){
   if (dv === 21){
     document.write("Sorry, the dealer has blackjack.");
     player.bankroll -= player.bet_size;
-    dealer.wins === true;
+    dealer.wins = true;
   }
 }
 
@@ -163,7 +163,7 @@ function hit_button(){
 
   button_hit.addEventListener ("click", function() {
     player.hand.push(dealHand());
-    $('#player_hand').append(displayCard(player.hand[player.hand.length - 1]));
+    $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
     var pv = handValue(player.hand);
     $('#player_name').append(' -> ' + pv);
   });
