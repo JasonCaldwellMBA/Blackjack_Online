@@ -146,16 +146,11 @@ function player_bj_check(pv){
   }
 }
 
-// Offer insurance if dealer's first card was an A
+// Display insurance message if dealer's first card was an A
 function insurance_offer(){
-  // Refactor this in future - don't like confirm functionality - allow buying even though it is a bad decision
   if (dealer.hand[0][0] === 'A') {
-    if (confirm("Do you want to buy insurance?")){
-      document.write("Hint: You very rarely want to buy insurance in blackjack. It is always unprofitable based off of the odds given in this game and therefore you cannot buy it.");
-    }
-    else {
-      document.write("Good decision. Buying insurance in blackjack is almost always a losing play over the long run.");
-    }
+    $('#winner').text('');
+    $('#winner').text("Usually you would be offerred insurance since the dealer has an ace showing. This is almost always unprofitable and therefore isn't offerred.");
   }
 }
 
@@ -381,7 +376,7 @@ function determine_winner() {
     player.bankroll += amount;
   }
   else if (dealer.blackjack) {
-    $('#winner').text("Sorry, dealer wins with blackjack.")
+    $('#winner').append(" Sorry, dealer wins with blackjack.")
     player.bankroll -= player.bet_size;
   }
   else if (dealer.wins) {
