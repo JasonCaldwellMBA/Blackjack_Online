@@ -233,7 +233,68 @@ function hint_button(){
   $("#hint").append(button_hint);
 
   button_hint.addEventListener ("click", function() {
-    alert("hint");
+    // Note: player soft hand has slightly different odds; but for this game we are using the same hints for both.
+		// Same for split hands.
+		var pv = handValue(player.hand);
+		var dv = handValue(dealer.hand[0][0]);
+		// Player hard hand recommendations
+		// https://wizardofodds.com/games/blackjack/strategy/1-deck/ ref 10/29/17
+		if (pv >= 4 && pv <= 7) {
+				hint = "hitting";
+		}
+		else if	(pv === 8) {
+			if (dv >= 2 && dv <= 4) {
+				hint = "hitting";
+			}
+			else if (dv >= 5 && dv <= 6) {
+					hint = "doubling or hitting";
+			}
+			else if (dv >= 7 && dv <= 11) {
+				hint = "hitting";
+			}
+		}
+		else if	(pv === 9) {
+			if (dv >= 2 && dv <= 6) {
+				hint = "doubling or hitting";
+			}
+			else if (dv >= 7 && dv <= 11) {
+				hint = "hitting";
+			}
+		}
+		else if	(pv === 10) {
+			if (dv >= 2 && dv <= 9) {
+				hint = "doubling or hitting";
+			}
+			else if (dv >= 10 && dv <= 11) {
+				hint = "hitting";
+			}
+		}
+		else if	(pv === 11) {
+			hint = "doubling or hitting";
+		}
+		else if	(pv === 12) {
+			if (dv >= 2 && dv <= 3) {
+				hint = "hitting";
+			}
+			else if (dv >= 4 && dv <= 6) {
+				hint = "standing";
+			}
+			else if (dv >= 7 && dv <= 11) {
+				hint = "hitting";
+			}
+		}
+		else if	(pv >= 13 && pv <= 16) {
+			if (dv >= 2 && dv <= 6) {
+				hint = "standing";
+			}
+			else if (dv >= 7 && dv <= 11) {
+				hint = "hitting";
+			}
+		}
+		else if	(pv >= 17) {
+			hint = "standing";
+		}
+		$('#winner').text("The odds recommend: " + hint);
   });
 }
 
@@ -291,6 +352,7 @@ var initial_deal = function() {
 };
 
 function player_turn(){
+  $('#winner').text();
   if (handValue(player.hand) > 21) {
     dealer.wins = true;
     button_stand.disabled = true;
@@ -353,18 +415,24 @@ function determine_winner() {
   else{
     console.log("unknown winner")
   }
+
   hand_num++;
-  stats();
-  // player.blackjack = false;
-  // dealer.blackjack = false;
-  // player.wins = false;
-  // dealer.wins = false;
-  // button_stand.disabled = false;
-  // button_hit.disabled = false;
-  // button_double.disabled = false;
-  // button_split.disabled = false;
-  // button_hint.disabled = false;
-  // initial_deal();
+  // while (hand_num < 10){
+  // //stats();
+  //   var cards = [];
+  //   player.hand = [];
+  //   dealer.hand = [];
+  //   player.blackjack = false;
+  //   dealer.blackjack = false;
+  //   player.wins = false;
+  //   dealer.wins = false;
+  //   button_stand.disabled = false;
+  //   button_hit.disabled = false;
+  //   button_double.disabled = false;
+  //   button_split.disabled = false;
+  //   button_hint.disabled = false;
+  //   initial_deal();
+  // }
 }
 
 // Start game
