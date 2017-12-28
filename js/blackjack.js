@@ -10,7 +10,6 @@ var player = {
   bet_size : 2.00,
   hand : [],
   wins : false,
-  end_turn : false
 };
 
 var dealer = {
@@ -151,8 +150,7 @@ function stand_button(){
   $("#stand").append(button_stand);
 
   button_stand.addEventListener ("click", function() {
-    player.end_turn = true;
-    console.log(player.end_turn);
+    dealer_turn();
   });
 }
 
@@ -182,7 +180,7 @@ function double_button(){
     $('#player_hand').append(displayCard(player.hand[2]));
     var pv = handValue(player.hand);
     $('#player_name').append(' -> ' + pv);
-    player.end_turn = true;
+    dealer_turn();
   });
 }
 
@@ -263,8 +261,23 @@ var initial_deal = function() {
   stats();
 };
 
+function dealer_turn() {
+  $('#dealer_hand').append(displayCard(dealer.hand[1]));
+  var dv = handValue(dealer.hand);
+  $('#dealer_name').append(' -> ' + dv);
+  var i = 2;
+  while (dv < 17) {
+    dealer.hand.push(dealHand());
+    $('#dealer_hand').append(displayCard(dealer.hand[i]));
+    var dv = handValue(dealer.hand);
+    $('#dealer_name').append(' -> ' + dv);
+    i++;
+  }
+}
+
 // Start game
 initial_deal();
+
 
 console.log("Remaining deck: ");
 console.log(cards);
