@@ -33,8 +33,8 @@ var button_hint = document.createElement("button");
 button_hint.innerHTML = "Hint";
 
 // Place bet - Will be interactive in future
-function place_bet(){
-  var bet = player.bet_size;
+function place_bet(multiple){
+  var bet = player.bet_size * multiple;
   $('#bet').children().text('');
   $('#bet').children().text('Bet Amount: $' + bet);
   return bet;
@@ -199,8 +199,7 @@ function double_button(){
   $("#double").append(button_double);
 
   button_double.addEventListener ("click", function() {
-    // player.bet *= 2;
-    // $('#bet').children().append(player.bet);
+    place_bet(2);
     player.hand.push(dealHand());
     $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
     var pv = handValue(player.hand);
@@ -303,7 +302,7 @@ function stats() {
 
 // Setup game
 var initial_deal = function() {
-  var amount = place_bet();
+  place_bet(1);
   create_shuffled_deck();
 
   $('#dealer_name').text(dealer.name + "'s Hand Value: ");
