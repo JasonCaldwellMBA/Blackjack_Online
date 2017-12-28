@@ -300,9 +300,12 @@ function hint_button(){
 
 // Create stats section
 function stats() {
-  $('#score').children().text(score);
-  $('#hand_num').children().text(hand_num);
-  $('#bankroll').children().text(player.bankroll);
+  $('#score').children().text('');
+  $('#score').children().text('Score: ' + score);
+  $('#hand_num').children().text('');
+  $('#hand_num').children().text('Hand Number: ' + hand_num);
+  $('#bankroll').children().text('');
+  $('#bankroll').children().text('Bankroll: $' + player.bankroll);
 }
 
 // Setup game
@@ -418,8 +421,8 @@ function determine_winner() {
   }
 
   hand_num++;
+  stats();
   // while (hand_num < 10){
-  // //stats();
   //   var cards = [];
   //   player.hand = [];
   //   dealer.hand = [];
