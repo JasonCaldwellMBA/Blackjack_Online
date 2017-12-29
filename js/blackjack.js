@@ -1,5 +1,6 @@
 // Starting game stats
 var cards = [];
+var amount = 0;
 var handNum = 1;
 var score = 0;
 
@@ -144,7 +145,7 @@ function player21Check(){
     player.blackjack = true;
     player.wins = true;
     toggleAllButtons()
-    determineWinner();
+    determineWinner(amount);
   }
 }
 
@@ -165,7 +166,7 @@ function dealer21Check(){
     dealer.blackjack = true;
     dealer.wins = true;
     toggleAllButtons()
-    determineWinner();
+    determineWinner(amount);
   }
 }
 
@@ -202,7 +203,7 @@ function doubleButton(){
 
   buttonDouble.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
-    placeBet(2);
+    amount = placeBet(2);
     player.hand.push(dealHand());
     $('#playerHand').append(displayCard(player.hand[player.hand.length - 1]));
     player.handValue = handValue(player.hand);
@@ -308,6 +309,7 @@ function dealButton(){
     player.handValue = 0;
     dealer.hand = [];
     dealer.handValue = 0;
+    amount = 0;
     $('#playerName').text('');
     $('#dealerName').text('');
     $('#playerHand').text('');
@@ -341,7 +343,7 @@ var initialDeal = function() {
   // For testing
   // console.log("New shuffled deck: ");
   // console.log(cards);
-  placeBet(1);
+  amount = placeBet(1);
   createShuffledDeck();
   buttonDeal.disabled = true;
 
@@ -394,7 +396,7 @@ function playerTurn(){
   if (handValue(player.hand) > 21) {
     dealer.wins = true;
     toggleAllButtons()
-    determineWinner();
+    determineWinner(amount);
   }
 }
 
@@ -414,43 +416,44 @@ function dealerTurn() {
       player.wins = true;
     }
   }
-  determineWinner();
+  determineWinner(amount);
 }
 
 // Winner order: player blackjack, dealer blackjack, player over 21 means dealer wins, dealer over 21 means player wins, whoever has the highest hand value wins, it is a tie, there is a catch all for all other scenarios (which shouldn't exist and means I made a mistake in my logic somewhere)
-function determineWinner() {
+function determineWinner(amount) {
   if (player.blackjack) {
-    var amount = player.betSize * 1.5;
-    $('#winner').text("Congrats, you win $" + amount + " with blackjack!")
+    amount *= 1.5;
+    $('#winner').text("Congrats, you win $" + amount + " with blackjack!");
     player.bankroll += amount;
   }
   else if (dealer.blackjack) {
-    $('#winner').append("\n" + "Sorry, dealer wins with blackjack.")
-    player.bankroll -= player.betSize;
+    $('#winner').append("\n" + "Sorry, dealer wins with blackjack.");
+    player.bankroll -= amount;
   }
   else if (dealer.wins) {
-    $('#winner').text("Sorry, dealer wins.")
-    player.bankroll -= player.betSize;
+    $('#winner').text("Sorry, dealer wins.");
+    player.bankroll -= amount;
   }
   else if (player.wins){
-    $('#winner').text("Player wins!")
-    player.bankroll += player.betSize;
+    $('#winner').text("Player wins!");
+    player.bankroll += amount;
   }
   else if (handValue(dealer.hand) > handValue(player.hand)) {
-    $('#winner').text("Sorry, dealer wins.")
-    player.bankroll -= player.betSize;
+    $('#winner').text("Sorry, dealer wins.");
+    player.bankroll -= amount;
   }
   else if (handValue(dealer.hand) < handValue(player.hand)) {
-    $('#winner').text("Player wins!")
-    player.bankroll += player.betSize;
+    $('#winner').text("Player wins!");
+    player.bankroll += amount;
   }
   else if (handValue(dealer.hand) === handValue(player.hand)) {
-    $('#winner').text("It's a push (tie).")
+    $('#winner').text("It's a push (tie).");
     // No change to bankroll
   }
   else{
-    console.log("unknown winner")
+    alert("Sorry, unknown winner. Please reload page and play again.");
   }
+  $('#bankroll').children().append(' -> ' + player.bankroll);
 }
 
 // Start game
