@@ -328,21 +328,29 @@ function dealButton(){
   });
 }
 
-// Create stats section
-function stats() {
+// Show score (this is the number of correct expected value decisions the player has made). Games with varience are challenging because the correct decision (the one that will win in the long run mathematically) isn't always rewarded in the short term (i.e. lose the individual hand).
+function displayScore() {
   $('#score').children().text('');
   $('#score').children().text('Score: ' + score);
+}
+
+// Show hand number
+function displayHandNum() {
   $('#handNum').children().text('');
   $('#handNum').children().text('Hand Number: ' + handNum);
+}
+
+// Show player bankroll (total amount of money the player has for the session)
+function displayBankroll() {
   $('#bankroll').children().text('');
   $('#bankroll').children().text('Bankroll: $' + player.bankroll);
 }
 
 // Setup game
 var initialDeal = function() {
-  // For testing
-  // console.log("New shuffled deck: ");
-  // console.log(cards);
+  displayScore();
+  displayHandNum();
+  displayBankroll();
   amount = placeBet(1);
   createShuffledDeck();
   buttonDeal.disabled = true;
@@ -386,8 +394,6 @@ var initialDeal = function() {
   }
   tipButton();
   dealButton();
-
-  stats();
 };
 
 // Since the player has to act first the dealer automatically wins when the player goes over 21
