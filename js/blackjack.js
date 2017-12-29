@@ -162,6 +162,8 @@ function insurance_offer(){
 // Check to see if the dealer has blackjack
 function dealer_bj_check(dv){
   if (dv === 21){
+    $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
+    $('#dealer_name').append(' -> ' + dv);
     dealer.blackjack = true;
     dealer.wins = true;
     toggle_all_buttons()
@@ -299,6 +301,38 @@ function hint_button(){
   });
 }
 
+// Create deal event
+function deal_button(){
+  $("#new_deal").append(button_deal);
+
+  button_deal.addEventListener ("click", function(event) {
+    event.stopImmediatePropagation();
+    console.log(hand_num);
+    hand_num++;
+    console.log(hand_num);
+    cards = [];
+    player.hand = [];
+    pv = 0;
+    dealer.hand = [];
+    dv = 0;
+    $('#player_name').text('');
+    $('#dealer_name').text('');
+    $('#player_hand').text('');
+    $('#dealer_hand').text('');
+    $('#winner').text('');
+    player.blackjack = false;
+    dealer.blackjack = false;
+    player.wins = false;
+    dealer.wins = false;
+    button_stand.disabled = false;
+    button_hit.disabled = false;
+    button_double.disabled = false;
+    button_split.disabled = false;
+    button_hint.disabled = false;
+    initial_deal();
+  });
+}
+
 // Create stats section
 function stats() {
   $('#score').children().text('');
@@ -395,7 +429,7 @@ function determine_winner() {
     player.bankroll += amount;
   }
   else if (dealer.blackjack) {
-    $('#winner').append(" Sorry, dealer wins with blackjack.")
+    $('#winner').append("\n" + "Sorry, dealer wins with blackjack.")
     player.bankroll -= player.bet_size;
   }
   else if (dealer.wins) {
@@ -428,39 +462,6 @@ function determine_winner() {
 
 // Start game
 initial_deal();
-
-
-// Create deal event
-function deal_button(){
-  $("#new_deal").append(button_deal);
-
-  button_deal.addEventListener ("click", function(event) {
-    event.stopImmediatePropagation();
-    console.log(hand_num);
-    hand_num++;
-    console.log(hand_num);
-    cards = [];
-    player.hand = [];
-    pv = 0;
-    dealer.hand = [];
-    dv = 0;
-    $('#player_name').text('');
-    $('#dealer_name').text('');
-    $('#player_hand').text('');
-    $('#dealer_hand').text('');
-    $('#winner').text('');
-    player.blackjack = false;
-    dealer.blackjack = false;
-    player.wins = false;
-    dealer.wins = false;
-    button_stand.disabled = false;
-    button_hit.disabled = false;
-    button_double.disabled = false;
-    button_split.disabled = false;
-    button_hint.disabled = false;
-    initial_deal();
-  });
-}
 
 // For testing
 // console.log("Remaining deck: ");
