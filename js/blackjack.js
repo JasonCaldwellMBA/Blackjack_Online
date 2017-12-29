@@ -2,14 +2,14 @@
 var cards = [];
 var pv = 0;
 var dv = 0;
-var hand_num = 1;
+var handNum = 1;
 var score = 0;
 
 // Create player and dealer
 var player = {
   name : 'Player',
-  bankroll : 100.00,
-  bet_size : 2.00,
+  bankroll : 100,
+  betSize : 2,
   hand : [],
   wins : false,
   blackjack : false
@@ -23,29 +23,29 @@ var dealer = {
 };
 
 //Create action/event buttons
-var button_stand = document.createElement("button");
-button_stand.innerHTML = "Stand";
-var button_hit = document.createElement("button");
-button_hit.innerHTML = "Hit";
-var button_double = document.createElement("button");
-button_double.innerHTML = "Double";
-var button_split = document.createElement("button");
-button_split.innerHTML = "Split";
-var button_hint = document.createElement("button");
-button_hint.innerHTML = "Hint";
-var button_deal = document.createElement("button");
-button_deal.innerHTML = "Deal";
+var buttonStand = document.createElement("button");
+buttonStand.innerHTML = "Stand";
+var buttonHit = document.createElement("button");
+buttonHit.innerHTML = "Hit";
+var buttonDouble = document.createElement("button");
+buttonDouble.innerHTML = "Double";
+var buttonSplit = document.createElement("button");
+buttonSplit.innerHTML = "Split";
+var buttonHint = document.createElement("button");
+buttonHint.innerHTML = "Hint";
+var buttonDeal = document.createElement("button");
+buttonDeal.innerHTML = "Deal";
 
 // Place bet - Will be interactive in future
-function place_bet(multiple){
-  var bet = player.bet_size * multiple;
+function placeBet(multiple){
+  var bet = player.betSize * multiple;
   $('#bet').children().text('');
   $('#bet').children().text('Bet Amount: $' + bet);
   return bet;
 }
 
 // Create new shuffled deck
-function create_shuffled_deck(){
+function createShuffledDeck(){
   // Create ranks and suits
   var rank = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
   var suit = ["c", "d", "h", "s"];
@@ -60,7 +60,7 @@ function create_shuffled_deck(){
     return cards;
   }
 
-  var new_deck = deck();
+  var newDeck = deck();
 
   // Ref accepted answer from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array on 12/25/17
   function shuffle(array) {
@@ -77,7 +77,7 @@ function create_shuffled_deck(){
     }
     return array;
   };
-  return shuffle(new_deck);
+  return shuffle(newDeck);
 }
 
 // Deal initial cards (2 for the player and one for the dealer)
@@ -87,8 +87,7 @@ function dealHand(){
 
 // Show card image
 function displayCard(card) {
-  var image_location = '<img src="images/cards/' + card + '.png" alt=Playing card ' + card + '>';
-  return image_location;
+  return '<img src="images/cards/' + card + '.png" alt=Playing card ' + card + '>';
 }
 
 // Evaluate hand values
@@ -132,27 +131,27 @@ function handValue(hand){
   return value;
 }
 
-function toggle_all_buttons() {
-  button_stand.disabled = true;
-  button_hit.disabled = true;
-  button_double.disabled = true;
-  button_split.disabled = true;
-  button_hint.disabled = true;
-  button_deal.disabled = false;
+function toggleAllButtons() {
+  buttonStand.disabled = true;
+  buttonHit.disabled = true;
+  buttonDouble.disabled = true;
+  buttonSplit.disabled = true;
+  buttonHint.disabled = true;
+  buttonDeal.disabled = false;
 }
 
 // Player blackjack check
-function player_bj_check(pv){
+function player21Check(pv){
   if (pv === 21){
     player.blackjack = true;
     player.wins = true;
-    toggle_all_buttons()
-    determine_winner();
+    toggleAllButtons()
+    determineWinner();
   }
 }
 
 // Display insurance message if dealer's first card was an A
-function insurance_offer(){
+function insuranceOffer(){
   if (dealer.hand[0][0] === 'A') {
     $('#winner').text('');
     $('#winner').text("Insurance is almost always unprofitable and therefore isn't offerred.");
@@ -160,81 +159,77 @@ function insurance_offer(){
 }
 
 // Check to see if the dealer has blackjack
-function dealer_bj_check(dv){
+function dealer21Check(dv){
   if (dv === 21){
-    $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
-    $('#dealer_name').append(' -> ' + dv);
+    $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
+    $('#dealerName').append(' -> ' + dv);
     dealer.blackjack = true;
     dealer.wins = true;
-    toggle_all_buttons()
-    determine_winner();
+    toggleAllButtons()
+    determineWinner();
   }
 }
 
 // Create stand event
-function stand_button(){
-  $("#stand").append(button_stand);
+function standButton(){
+  $("#stand").append(buttonStand);
 
-  button_stand.addEventListener ("click", function(event) {
+  buttonStand.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
-    toggle_all_buttons()
-    dealer_turn();
+    toggleAllButtons()
+    dealerTurn();
   });
 }
 
 // Create hit event
-function hit_button(){
-  $("#hit").append(button_hit);
+function hitButton(){
+  $("#hit").append(buttonHit);
 
-//   $(element).off().on('click', function() {
-//     // function body
-// });
-
-  button_hit.addEventListener ("click", function(event) {
+  buttonHit.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
     player.hand.push(dealHand());
-    $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
+    $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
     pv = handValue(player.hand);
-    $('#player_name').append(' -> ' + pv);
-    button_double.disabled = true;
-    button_split.disabled = true;
-    player_turn();
+    $('#playerName').append(' -> ' + pv);
+    buttonDouble.disabled = true;
+    buttonSplit.disabled = true;
+    playerTurn();
   });
 }
 
 // Create double event - only available first round
-function double_button(){
-  $("#double").append(button_double);
+function doubleButton(){
+  $("#double").append(buttonDouble);
 
-  button_double.addEventListener ("click", function(event) {
+  buttonDouble.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
-    place_bet(2);
+    placeBet(2);
     player.hand.push(dealHand());
-    $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
+    $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
     pv = handValue(player.hand);
-    $('#player_name').append(' -> ' + pv);
-    toggle_all_buttons()
-    player_turn();
-    dealer_turn();
+    $('#playerName').append(' -> ' + pv);
+    toggleAllButtons()
+    playerTurn();
+    dealerTurn();
   });
 }
 
 // Create split event
-function split_button(){
-  $("#split").append(button_split);
+function splitButton(){
+  $("#split").append(buttonSplit);
 
-  button_split.addEventListener ("click", function(event) {
+  buttonSplit.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
-    alert("split");
+    alert("The split functionality is still in development.");
     // This is going to be complicated
   });
 }
 
 // Create hint event
-function hint_button(){
-  $("#hint").append(button_hint);
+function hintButton(){
+  $("#hint").append(buttonHint);
 
-  button_hint.addEventListener ("click", function(event) {
+  buttonHint.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
     // Note: player soft hand has slightly different odds; but for this game we are using the same hints for both.
 		// Same for split hands.
@@ -302,34 +297,32 @@ function hint_button(){
 }
 
 // Create deal event
-function deal_button(){
-  $("#new_deal").append(button_deal);
+function dealButton(){
+  $("#newDeal").append(buttonDeal);
 
-  button_deal.addEventListener ("click", function(event) {
+  buttonDeal.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
-    console.log(hand_num);
-    hand_num++;
-    console.log(hand_num);
+    handNum++;
     cards = [];
     player.hand = [];
     pv = 0;
     dealer.hand = [];
     dv = 0;
-    $('#player_name').text('');
-    $('#dealer_name').text('');
-    $('#player_hand').text('');
-    $('#dealer_hand').text('');
+    $('#playerName').text('');
+    $('#dealerName').text('');
+    $('#playerHand').text('');
+    $('#dealerHand').text('');
     $('#winner').text('');
     player.blackjack = false;
     dealer.blackjack = false;
     player.wins = false;
     dealer.wins = false;
-    button_stand.disabled = false;
-    button_hit.disabled = false;
-    button_double.disabled = false;
-    button_split.disabled = false;
-    button_hint.disabled = false;
-    initial_deal();
+    buttonStand.disabled = false;
+    buttonHit.disabled = false;
+    buttonDouble.disabled = false;
+    buttonSplit.disabled = false;
+    buttonHint.disabled = false;
+    initialDeal();
   });
 }
 
@@ -337,28 +330,28 @@ function deal_button(){
 function stats() {
   $('#score').children().text('');
   $('#score').children().text('Score: ' + score);
-  $('#hand_num').children().text('');
-  $('#hand_num').children().text('Hand Number: ' + hand_num);
+  $('#handNum').children().text('');
+  $('#handNum').children().text('Hand Number: ' + handNum);
   $('#bankroll').children().text('');
   $('#bankroll').children().text('Bankroll: $' + player.bankroll);
 }
 
 // Setup game
-var initial_deal = function() {
-  place_bet(1);
-  create_shuffled_deck();
-  button_deal.disabled = true;
+var initialDeal = function() {
+  placeBet(1);
+  createShuffledDeck();
+  buttonDeal.disabled = true;
 
-  $('#dealer_name').text(dealer.name + "'s Hand Value: ");
-  $('#player_name').text(player.name + "'s Hand Value: ");
+  $('#dealerName').text(dealer.name + "'s Hand Value: ");
+  $('#playerName').text(player.name + "'s Hand Value: ");
 
   // Deal first three cards face up (2 to player and 1 to dealer)
   player.hand.push(dealHand());
-  $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
+  $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
   dealer.hand.push(dealHand());
-  $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
+  $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
   player.hand.push(dealHand());
-  $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
+  $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
 
   console.log("player hand");
   console.log(player.hand);
@@ -368,85 +361,83 @@ var initial_deal = function() {
   pv = handValue(player.hand);
   dv = handValue(dealer.hand);
 
-  $('#player_name').append(pv);
-  $('#dealer_name').append(dv);
+  $('#playerName').append(pv);
+  $('#dealerName').append(dv);
 
-  player_bj_check(pv);
+  player21Check(pv);
 
   // Deal final dealer card
   dealer.hand.push(dealHand());
-  console.log("dealer hand");
-  console.log(dealer.hand);
   dv = handValue(dealer.hand);
 
-  insurance_offer()
-  dealer_bj_check(dv)
+  insuranceOffer()
+  dealer21Check(dv)
 
-  stand_button();
-  hit_button();
-  double_button();
-  split_button();
+  standButton();
+  hitButton();
+  doubleButton();
+  splitButton();
   if (!(player.hand[0][0] === player.hand[1][0])){
-    button_split.disabled = true;
+    buttonSplit.disabled = true;
   }
-  hint_button();
-  deal_button();
+  hintButton();
+  dealButton();
 
   stats();
 };
 
-function player_turn(){
+function playerTurn(){
   $('#winner').text('');
   if (handValue(player.hand) > 21) {
     dealer.wins = true;
-    toggle_all_buttons()
-    determine_winner();
+    toggleAllButtons()
+    determineWinner();
   }
 }
 
-function dealer_turn() {
+function dealerTurn() {
   if (!(dealer.wins)) {
-    $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
+    $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
     dv = handValue(dealer.hand);
-    $('#dealer_name').append(' -> ' + dv);
+    $('#dealerName').append(' -> ' + dv);
     while (dv < 17) {
       dealer.hand.push(dealHand());
-      $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
+      $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
       dv = handValue(dealer.hand);
-      $('#dealer_name').append(' -> ' + dv);
+      $('#dealerName').append(' -> ' + dv);
     }
     if (dv > 21) {
       player.wins = true;
     }
   }
-  determine_winner();
+  determineWinner();
 }
 
-function determine_winner() {
+function determineWinner() {
   if (player.blackjack) {
-    var amount = player.bet_size * 1.5;
+    var amount = player.betSize * 1.5;
     $('#winner').text("Congrats, you win $" + amount + " with blackjack!")
     player.bankroll += amount;
   }
   else if (dealer.blackjack) {
     $('#winner').append("\n" + "Sorry, dealer wins with blackjack.")
-    player.bankroll -= player.bet_size;
+    player.bankroll -= player.betSize;
   }
   else if (dealer.wins) {
     $('#winner').text("Sorry, dealer wins.")
-    player.bankroll -= player.bet_size;
+    player.bankroll -= player.betSize;
   }
   else if (player.wins){
     $('#winner').text("Player wins!")
-    player.bankroll += player.bet_size;
+    player.bankroll += player.betSize;
   }
   else if (handValue(dealer.hand) > handValue(player.hand)) {
     $('#winner').text("Sorry, dealer wins.")
-    player.bankroll -= player.bet_size;
+    player.bankroll -= player.betSize;
   }
   else if (handValue(dealer.hand) < handValue(player.hand)) {
     $('#winner').text("Player wins!")
-    player.bankroll += player.bet_size;
+    player.bankroll += player.betSize;
   }
   else if (handValue(dealer.hand) === handValue(player.hand)) {
     $('#winner').text("It's a push (tie).")
@@ -455,13 +446,10 @@ function determine_winner() {
   else{
     console.log("unknown winner")
   }
-  console.log(hand_num);
-  console.log("Remaining deck: ");
-  console.log(cards);
 }
 
 // Start game
-initial_deal();
+initialDeal();
 
 // For testing
 // console.log("Remaining deck: ");
