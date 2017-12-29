@@ -1,25 +1,26 @@
 // Starting game stats
 var cards = [];
-var pv = 0;
 var dv = 0;
 var handNum = 1;
 var score = 0;
 
 // Create player and dealer
 var player = {
-  name : 'Player',
-  bankroll : 100,
-  betSize : 2,
-  hand : [],
-  wins : false,
-  blackjack : false
+  name: 'Player',
+  bankroll: 100,
+  betSize: 2,
+  hand: [],
+  handValue: 0,
+  wins: false,
+  blackjack: false
 };
 
 var dealer = {
-  name : 'Dealer',
-  hand : [],
-  wins : false,
-  blackjack : false
+  name: 'Dealer',
+  hand: [],
+  handValue: 0,
+  wins: false,
+  blackjack: false
 };
 
 //Create action/event buttons
@@ -141,8 +142,8 @@ function toggleAllButtons() {
 }
 
 // Player blackjack check
-function player21Check(pv){
-  if (pv === 21){
+function player21Check(){
+  if (player.handValue === 21){
     player.blackjack = true;
     player.wins = true;
     toggleAllButtons()
@@ -189,8 +190,8 @@ function hitButton(){
     event.stopImmediatePropagation();
     player.hand.push(dealHand());
     $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
-    pv = handValue(player.hand);
-    $('#playerName').append(' -> ' + pv);
+    player.handValue = handValue(player.hand);
+    $('#playerName').append(' -> ' + player.handValue);
     buttonDouble.disabled = true;
     buttonSplit.disabled = true;
     playerTurn();
@@ -206,8 +207,8 @@ function doubleButton(){
     placeBet(2);
     player.hand.push(dealHand());
     $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
-    pv = handValue(player.hand);
-    $('#playerName').append(' -> ' + pv);
+    player.handValue = handValue(player.hand);
+    $('#playerName').append(' -> ' + player.handValue);
     toggleAllButtons()
     playerTurn();
     dealerTurn();
@@ -233,14 +234,14 @@ function hintButton(){
     event.stopImmediatePropagation();
     // Note: player soft hand has slightly different odds; but for this game we are using the same hints for both.
 		// Same for split hands.
-		pv = handValue(player.hand);
+		player.handValue = handValue(player.hand);
 		dv = handValue(dealer.hand[0][0]);
 		// Player hard hand recommendations
 		// https://wizardofodds.com/games/blackjack/strategy/1-deck/ ref 10/29/17
-		if (pv >= 4 && pv <= 7) {
+		if (player.handValue >= 4 && player.handValue <= 7) {
 				hint = "hitting";
 		}
-		else if	(pv === 8) {
+		else if	(player.handValue === 8) {
 			if (dv >= 2 && dv <= 4) {
 				hint = "hitting";
 			}
@@ -251,7 +252,7 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(pv === 9) {
+		else if	(player.handValue === 9) {
 			if (dv >= 2 && dv <= 6) {
 				hint = "doubling or hitting";
 			}
@@ -259,7 +260,7 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(pv === 10) {
+		else if	(player.handValue === 10) {
 			if (dv >= 2 && dv <= 9) {
 				hint = "doubling or hitting";
 			}
@@ -267,10 +268,10 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(pv === 11) {
+		else if	(player.handValue === 11) {
 			hint = "doubling or hitting";
 		}
-		else if	(pv === 12) {
+		else if	(player.handValue === 12) {
 			if (dv >= 2 && dv <= 3) {
 				hint = "hitting";
 			}
@@ -281,7 +282,7 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(pv >= 13 && pv <= 16) {
+		else if	(player.handValue >= 13 && player.handValue <= 16) {
 			if (dv >= 2 && dv <= 6) {
 				hint = "standing";
 			}
@@ -289,7 +290,7 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(pv >= 17) {
+		else if	(player.handValue >= 17) {
 			hint = "standing";
 		}
 		$('#winner').text("The odds recommend: " + hint);
@@ -305,7 +306,7 @@ function dealButton(){
     handNum++;
     cards = [];
     player.hand = [];
-    pv = 0;
+    player.handValue = 0;
     dealer.hand = [];
     dv = 0;
     $('#playerName').text('');
@@ -358,13 +359,13 @@ var initialDeal = function() {
   console.log("dealer hand");
   console.log(dealer.hand);
 
-  pv = handValue(player.hand);
+  player.handValue = handValue(player.hand);
   dv = handValue(dealer.hand);
 
-  $('#playerName').append(pv);
+  $('#playerName').append(player.handValue);
   $('#dealerName').append(dv);
 
-  player21Check(pv);
+  player21Check();
 
   // Deal final dealer card
   dealer.hand.push(dealHand());
