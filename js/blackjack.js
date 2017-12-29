@@ -1,6 +1,5 @@
 // Starting game stats
 var cards = [];
-//var dv = 0;
 var handNum = 1;
 var score = 0;
 
@@ -81,7 +80,7 @@ function createShuffledDeck(){
   return shuffle(newDeck);
 }
 
-// Deal initial cards (2 for the player and one for the dealer)
+// Deal card from top of deck
 function dealHand(){
   return cards.shift();
 }
@@ -150,6 +149,7 @@ function player21Check(){
 }
 
 // Display insurance message if dealer's first card was an A
+// No longer going to give the option to make an incorrect decision
 function insuranceOffer(){
   if (dealer.hand[0][0] === 'A') {
     $('#winner').text('');
@@ -160,7 +160,7 @@ function insuranceOffer(){
 // Check to see if the dealer has blackjack
 function dealer21Check(){
   if (dealer.handValue === 21){
-    $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
+    $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length - 1]));
     $('#dealerName').append(' -> ' + dealer.handValue);
     dealer.blackjack = true;
     dealer.wins = true;
@@ -187,7 +187,7 @@ function hitButton(){
   buttonHit.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
     player.hand.push(dealHand());
-    $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
+    $('#playerHand').append(displayCard(player.hand[player.hand.length - 1]));
     player.handValue = handValue(player.hand);
     $('#playerName').append(' -> ' + player.handValue);
     buttonDouble.disabled = true;
@@ -204,7 +204,7 @@ function doubleButton(){
     event.stopImmediatePropagation();
     placeBet(2);
     player.hand.push(dealHand());
-    $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
+    $('#playerHand').append(displayCard(player.hand[player.hand.length - 1]));
     player.handValue = handValue(player.hand);
     $('#playerName').append(' -> ' + player.handValue);
     toggleAllButtons()
@@ -292,6 +292,7 @@ function hintButton(){
 			hint = "standing";
 		}
 		$('#winner').text("The odds recommend: " + hint);
+    return hint;
   });
 }
 
@@ -337,6 +338,9 @@ function stats() {
 
 // Setup game
 var initialDeal = function() {
+  // For testing
+  // console.log("New shuffled deck: ");
+  // console.log(cards);
   placeBet(1);
   createShuffledDeck();
   buttonDeal.disabled = true;
@@ -346,11 +350,11 @@ var initialDeal = function() {
 
   // Deal first three cards face up (2 to player and 1 to dealer)
   player.hand.push(dealHand());
-  $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
+  $('#playerHand').append(displayCard(player.hand[player.hand.length - 1]));
   dealer.hand.push(dealHand());
-  $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
+  $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length - 1]));
   player.hand.push(dealHand());
-  $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
+  $('#playerHand').append(displayCard(player.hand[player.hand.length - 1]));
 
   player.handValue = handValue(player.hand);
   dealer.handValue = handValue(dealer.hand);
@@ -358,18 +362,22 @@ var initialDeal = function() {
   $('#playerName').append(player.handValue);
   $('#dealerName').append(dealer.handValue);
 
+  // If player has blackjack they win and the round is over
   player21Check();
 
   // Deal final dealer card
   dealer.hand.push(dealHand());
   dealer.handValue = handValue(dealer.hand);
 
+  // Usually the player would be offered insurance; but since this is a negative expected value play it is no longer offered and the dealer wins the round if they have blackjack
   insuranceOffer()
   dealer21Check()
 
+  // Create action buttons
   standButton();
   hitButton();
   doubleButton();
+  // The split button is only enabled if both the cards are the same rank
   splitButton();
   if (!(player.hand[0][0] === player.hand[1][0])){
     buttonSplit.disabled = true;
@@ -380,6 +388,7 @@ var initialDeal = function() {
   stats();
 };
 
+// Since the player has to act first the dealer automatically wins when the player goes over 21
 function playerTurn(){
   $('#winner').text('');
   if (handValue(player.hand) > 21) {
@@ -389,14 +398,15 @@ function playerTurn(){
   }
 }
 
+// The dealer has to stand on all 17s (this rule favors the player - as opposed to allowing the dealer to hit on soft 17s)
 function dealerTurn() {
   if (!(dealer.wins)) {
-    $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
+    $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length - 1]));
     dealer.handValue = handValue(dealer.hand);
     $('#dealerName').append(' -> ' + dealer.handValue);
     while (dealer.handValue < 17) {
       dealer.hand.push(dealHand());
-      $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
+      $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length - 1]));
       dealer.handValue = handValue(dealer.hand);
       $('#dealerName').append(' -> ' + dealer.handValue);
     }
@@ -407,6 +417,7 @@ function dealerTurn() {
   determineWinner();
 }
 
+// Winner order: player blackjack, dealer blackjack, player over 21 means dealer wins, dealer over 21 means player wins, whoever has the highest hand value wins, it is a tie, there is a catch all for all other scenarios (which shouldn't exist and means I made a mistake in my logic somewhere)
 function determineWinner() {
   if (player.blackjack) {
     var amount = player.betSize * 1.5;
@@ -448,8 +459,3 @@ initialDeal();
 // For testing
 // console.log("Remaining deck: ");
 // console.log(cards);
-
-// console.log("Validate count of deck")
-// while( (i = cards.shift()) !== undefined ) {
-//     console.log(i);
-// }
