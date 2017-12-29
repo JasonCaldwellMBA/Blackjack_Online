@@ -2,7 +2,6 @@
 var cards = [];
 var amount = 0;
 var handNum = 1;
-var score = 0;
 
 // Create player and dealer
 var player = {
@@ -225,7 +224,7 @@ function splitButton(){
   });
 }
 
-// Create Tip event
+// Create Tip (odd helper) event
 function tipButton(){
   $("#tip").append(buttonTip);
 
@@ -328,12 +327,6 @@ function dealButton(){
   });
 }
 
-// Show score (this is the number of correct expected value decisions the player has made). Games with varience are challenging because the correct decision (the one that will win in the long run mathematically) isn't always rewarded in the short term (i.e. lose the individual hand).
-function displayScore() {
-  $('#score').children().text('');
-  $('#score').children().text('Score: ' + score);
-}
-
 // Show hand number
 function displayHandNum() {
   $('#handNum').children().text('');
@@ -348,7 +341,6 @@ function displayBankroll() {
 
 // Setup game
 var initialDeal = function() {
-  displayScore();
   displayHandNum();
   displayBankroll();
   amount = placeBet(1);
