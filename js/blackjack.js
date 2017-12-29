@@ -148,15 +148,6 @@ function player21Check(){
   }
 }
 
-// Display insurance message if dealer's first card was an A
-// No longer going to give the option to make an incorrect decision
-function insuranceOffer(){
-  if (dealer.hand[0][0] === 'A') {
-    $('#winner').text('');
-    $('#winner').text("Insurance is almost always unprofitable and therefore isn't offerred.");
-  }
-}
-
 // Check to see if the dealer has blackjack
 function dealer21Check(){
   if (dealer.handValue === 21){
@@ -219,12 +210,12 @@ function splitButton(){
 
   buttonSplit.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
-    alert("The split functionality is still in development.");
-    // This is going to be complicated
+    alert("The split functionality is a future enhancement. For now, the hand can be played out like any other.");
+    // This is going to be complicated; especially if I make this work on mobile
   });
 }
 
-// Create Tip (odd helper) event
+// Create Tip (odd calculation helper) event
 function tipButton(){
   $("#tip").append(buttonTip);
 
@@ -372,7 +363,6 @@ var initialDeal = function() {
   dealer.handValue = handValue(dealer.hand);
 
   // Usually the player would be offered insurance; but since this is a negative expected value play it is no longer offered and the dealer wins the round if they have blackjack
-  insuranceOffer()
   dealer21Check()
 
   // Create action buttons
@@ -425,7 +415,7 @@ function determineWinner(amount) {
     player.bankroll += amount;
   }
   else if (dealer.blackjack) {
-    $('#winner').append("\n" + "Sorry, dealer wins with blackjack.");
+    $('#winner').append("Sorry, dealer wins with blackjack.");
     player.bankroll -= amount;
   }
   else if (dealer.wins) {
@@ -456,7 +446,3 @@ function determineWinner(amount) {
 
 // Start game
 initialDeal();
-
-// For testing
-// console.log("Remaining deck: ");
-// console.log(cards);
