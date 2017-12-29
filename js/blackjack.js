@@ -282,7 +282,7 @@ function tipButton(){
 		else if	(pv >= 17) {
 			hint = "standing";
 		}
-		$('#winner').text("The odds recommend: " + hint);
+		$('#winner').children().text("The odds recommend: " + hint);
     return hint;
   });
 }
@@ -304,7 +304,7 @@ function dealButton(){
     $('#dealerName').text('');
     $('#playerHand').text('');
     $('#dealerHand').text('');
-    $('#winner').text('');
+    $('#winner').children().text('');
     player.blackjack = false;
     dealer.blackjack = false;
     player.wins = false;
@@ -380,7 +380,7 @@ var initialDeal = function() {
 
 // Since the player has to act first the dealer automatically wins when the player goes over 21
 function playerTurn(){
-  $('#winner').text('');
+  $('#winner').children().text('');
   if (handValue(player.hand) > 21) {
     dealer.wins = true;
     toggleAllButtons()
@@ -411,31 +411,31 @@ function dealerTurn() {
 function determineWinner(amount) {
   if (player.blackjack) {
     amount *= 1.5;
-    $('#winner').text("Congrats, you win $" + amount + " with blackjack!");
+    $('#winner').children().text("Congrats, you win $" + amount + " with blackjack!");
     player.bankroll += amount;
   }
   else if (dealer.blackjack) {
-    $('#winner').append("Sorry, dealer wins with blackjack.");
+    $('#winner').children().append("Sorry, dealer wins with blackjack.");
     player.bankroll -= amount;
   }
   else if (dealer.wins) {
-    $('#winner').text("Sorry, dealer wins.");
+    $('#winner').children().text("Sorry, dealer wins.");
     player.bankroll -= amount;
   }
   else if (player.wins){
-    $('#winner').text("Player wins!");
+    $('#winner').children().text("Player wins!");
     player.bankroll += amount;
   }
   else if (handValue(dealer.hand) > handValue(player.hand)) {
-    $('#winner').text("Sorry, dealer wins.");
+    $('#winner').children().text("Sorry, dealer wins.");
     player.bankroll -= amount;
   }
   else if (handValue(dealer.hand) < handValue(player.hand)) {
-    $('#winner').text("Player wins!");
+    $('#winner').children().text("Player wins!");
     player.bankroll += amount;
   }
   else if (handValue(dealer.hand) === handValue(player.hand)) {
-    $('#winner').text("It's a push (tie).");
+    $('#winner').children().text("It's a push (tie).");
     // No change to bankroll
   }
   else{
