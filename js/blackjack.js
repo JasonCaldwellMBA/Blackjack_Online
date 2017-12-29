@@ -403,8 +403,8 @@ function dealerTurn() {
     if (dealer.handValue > 21) {
       player.wins = true;
     }
+    determineWinner(amount);
   }
-  determineWinner(amount);
 }
 
 // Winner order: player blackjack, dealer blackjack, player over 21 means dealer wins, dealer over 21 means player wins, whoever has the highest hand value wins, it is a tie, there is a catch all for all other scenarios (which shouldn't exist and means I made a mistake in my logic somewhere)
