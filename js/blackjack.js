@@ -1,5 +1,7 @@
 // Starting game stats
 var cards = [];
+var pv = 0;
+var dv = 0;
 var hand_num = 1;
 var score = 0;
 
@@ -171,7 +173,8 @@ function dealer_bj_check(dv){
 function stand_button(){
   $("#stand").append(button_stand);
 
-  button_stand.addEventListener ("click", function() {
+  button_stand.addEventListener ("click", function(event) {
+    event.stopImmediatePropagation();
     toggle_all_buttons()
     dealer_turn();
   });
@@ -181,10 +184,15 @@ function stand_button(){
 function hit_button(){
   $("#hit").append(button_hit);
 
-  button_hit.addEventListener ("click", function() {
+//   $(element).off().on('click', function() {
+//     // function body
+// });
+
+  button_hit.addEventListener ("click", function(event) {
+    event.stopImmediatePropagation();
     player.hand.push(dealHand());
     $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
-    var pv = handValue(player.hand);
+    pv = handValue(player.hand);
     $('#player_name').append(' -> ' + pv);
     button_double.disabled = true;
     button_split.disabled = true;
@@ -196,11 +204,12 @@ function hit_button(){
 function double_button(){
   $("#double").append(button_double);
 
-  button_double.addEventListener ("click", function() {
+  button_double.addEventListener ("click", function(event) {
+    event.stopImmediatePropagation();
     place_bet(2);
     player.hand.push(dealHand());
     $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
-    var pv = handValue(player.hand);
+    pv = handValue(player.hand);
     $('#player_name').append(' -> ' + pv);
     toggle_all_buttons()
     player_turn();
@@ -212,7 +221,8 @@ function double_button(){
 function split_button(){
   $("#split").append(button_split);
 
-  button_split.addEventListener ("click", function() {
+  button_split.addEventListener ("click", function(event) {
+    event.stopImmediatePropagation();
     alert("split");
     // This is going to be complicated
   });
@@ -222,11 +232,12 @@ function split_button(){
 function hint_button(){
   $("#hint").append(button_hint);
 
-  button_hint.addEventListener ("click", function() {
+  button_hint.addEventListener ("click", function(event) {
+    event.stopImmediatePropagation();
     // Note: player soft hand has slightly different odds; but for this game we are using the same hints for both.
 		// Same for split hands.
-		var pv = handValue(player.hand);
-		var dv = handValue(dealer.hand[0][0]);
+		pv = handValue(player.hand);
+		dv = handValue(dealer.hand[0][0]);
 		// Player hard hand recommendations
 		// https://wizardofodds.com/games/blackjack/strategy/1-deck/ ref 10/29/17
 		if (pv >= 4 && pv <= 7) {
@@ -288,35 +299,6 @@ function hint_button(){
   });
 }
 
-// Create deal event
-function deal_button(){
-  $("#new_deal").append(button_deal);
-
-  button_deal.addEventListener ("click", function() {
-    hand_num += 1;
-    console.log(hand_num);
-    cards = [];
-    console.log(cards);
-    player.hand = [];
-    console.log(player.hand);
-    dealer.hand = [];
-    console.log(dealer.hand);
-    $('#player_hand').text('');
-    $('#dealer_hand').text('');
-    $('#winner').text('');
-    player.blackjack = false;
-    dealer.blackjack = false;
-    player.wins = false;
-    dealer.wins = false;
-    button_stand.disabled = false;
-    button_hit.disabled = false;
-    button_double.disabled = false;
-    button_split.disabled = false;
-    button_hint.disabled = false;
-    initial_deal();
-  });
-}
-
 // Create stats section
 function stats() {
   $('#score').children().text('');
@@ -332,7 +314,6 @@ var initial_deal = function() {
   place_bet(1);
   create_shuffled_deck();
   button_deal.disabled = true;
-  //console.log(cards);
 
   $('#dealer_name').text(dealer.name + "'s Hand Value: ");
   $('#player_name').text(player.name + "'s Hand Value: ");
@@ -345,11 +326,13 @@ var initial_deal = function() {
   player.hand.push(dealHand());
   $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
 
+  console.log("player hand");
   console.log(player.hand);
+  console.log("dealer hand");
   console.log(dealer.hand);
 
-  var pv = handValue(player.hand);
-  var dv = handValue(dealer.hand);
+  pv = handValue(player.hand);
+  dv = handValue(dealer.hand);
 
   $('#player_name').append(pv);
   $('#dealer_name').append(dv);
@@ -358,6 +341,7 @@ var initial_deal = function() {
 
   // Deal final dealer card
   dealer.hand.push(dealHand());
+  console.log("dealer hand");
   console.log(dealer.hand);
   dv = handValue(dealer.hand);
 
@@ -389,12 +373,12 @@ function player_turn(){
 function dealer_turn() {
   if (!(dealer.wins)) {
     $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
-    var dv = handValue(dealer.hand);
+    dv = handValue(dealer.hand);
     $('#dealer_name').append(' -> ' + dv);
     while (dv < 17) {
       dealer.hand.push(dealHand());
       $('#dealer_hand').append(displayCard(dealer.hand[dealer.hand.length-1]));
-      var dv = handValue(dealer.hand);
+      dv = handValue(dealer.hand);
       $('#dealer_name').append(' -> ' + dv);
     }
     if (dv > 21) {
@@ -444,6 +428,39 @@ function determine_winner() {
 
 // Start game
 initial_deal();
+
+
+// Create deal event
+function deal_button(){
+  $("#new_deal").append(button_deal);
+
+  button_deal.addEventListener ("click", function(event) {
+    event.stopImmediatePropagation();
+    console.log(hand_num);
+    hand_num++;
+    console.log(hand_num);
+    cards = [];
+    player.hand = [];
+    pv = 0;
+    dealer.hand = [];
+    dv = 0;
+    $('#player_name').text('');
+    $('#dealer_name').text('');
+    $('#player_hand').text('');
+    $('#dealer_hand').text('');
+    $('#winner').text('');
+    player.blackjack = false;
+    dealer.blackjack = false;
+    player.wins = false;
+    dealer.wins = false;
+    button_stand.disabled = false;
+    button_hit.disabled = false;
+    button_double.disabled = false;
+    button_split.disabled = false;
+    button_hint.disabled = false;
+    initial_deal();
+  });
+}
 
 // For testing
 // console.log("Remaining deck: ");
