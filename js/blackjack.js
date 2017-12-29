@@ -32,8 +32,8 @@ var buttonDouble = document.createElement("button");
 buttonDouble.innerHTML = "Double";
 var buttonSplit = document.createElement("button");
 buttonSplit.innerHTML = "Split";
-var buttonHint = document.createElement("button");
-buttonHint.innerHTML = "Hint";
+var buttonTip = document.createElement("button");
+buttonTip.innerHTML = "Tip";
 var buttonDeal = document.createElement("button");
 buttonDeal.innerHTML = "Deal";
 
@@ -135,7 +135,7 @@ function toggleAllButtons() {
   buttonHit.disabled = true;
   buttonDouble.disabled = true;
   buttonSplit.disabled = true;
-  buttonHint.disabled = true;
+  buttonTip.disabled = true;
   buttonDeal.disabled = false;
 }
 
@@ -225,11 +225,11 @@ function splitButton(){
   });
 }
 
-// Create hint event
-function hintButton(){
-  $("#hint").append(buttonHint);
+// Create Tip event
+function tipButton(){
+  $("#tip").append(buttonTip);
 
-  buttonHint.addEventListener ("click", function(event) {
+  buttonTip.addEventListener ("click", function(event) {
     event.stopImmediatePropagation();
     // Note: player soft hand has slightly different odds; but for this game we are using the same hints for both.
 		// Same for split hands.
@@ -323,7 +323,7 @@ function dealButton(){
     buttonHit.disabled = false;
     buttonDouble.disabled = false;
     buttonSplit.disabled = false;
-    buttonHint.disabled = false;
+    buttonTip.disabled = false;
     initialDeal();
   });
 }
@@ -384,7 +384,7 @@ var initialDeal = function() {
   if (!(player.hand[0][0] === player.hand[1][0])){
     buttonSplit.disabled = true;
   }
-  hintButton();
+  tipButton();
   dealButton();
 
   stats();
@@ -451,7 +451,7 @@ function determineWinner(amount) {
     // No change to bankroll
   }
   else{
-    alert("Sorry, unknown winner. Please reload page and play again.");
+    alert("Sorry, unknown winner. Please deal (or reload the page if needed) to continue play.");
   }
   $('#bankroll').children().append(' -> ' + player.bankroll);
 }
