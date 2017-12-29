@@ -1,6 +1,6 @@
 // Starting game stats
 var cards = [];
-var dv = 0;
+//var dv = 0;
 var handNum = 1;
 var score = 0;
 
@@ -127,8 +127,6 @@ function handValue(hand){
     }
     aces--;
   }
-  // console.log(value);
-  // console.log(aces);
   return value;
 }
 
@@ -160,10 +158,10 @@ function insuranceOffer(){
 }
 
 // Check to see if the dealer has blackjack
-function dealer21Check(dv){
-  if (dv === 21){
+function dealer21Check(){
+  if (dealer.handValue === 21){
     $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
-    $('#dealerName').append(' -> ' + dv);
+    $('#dealerName').append(' -> ' + dealer.handValue);
     dealer.blackjack = true;
     dealer.wins = true;
     toggleAllButtons()
@@ -234,14 +232,14 @@ function hintButton(){
     event.stopImmediatePropagation();
     // Note: player soft hand has slightly different odds; but for this game we are using the same hints for both.
 		// Same for split hands.
-		player.handValue = handValue(player.hand);
-		dv = handValue(dealer.hand[0][0]);
+		var pv = handValue(player.hand);
+		var dv = handValue(dealer.hand[0][0]);
 		// Player hard hand recommendations
 		// https://wizardofodds.com/games/blackjack/strategy/1-deck/ ref 10/29/17
-		if (player.handValue >= 4 && player.handValue <= 7) {
+		if (pv >= 4 && pv <= 7) {
 				hint = "hitting";
 		}
-		else if	(player.handValue === 8) {
+		else if	(pv === 8) {
 			if (dv >= 2 && dv <= 4) {
 				hint = "hitting";
 			}
@@ -252,7 +250,7 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(player.handValue === 9) {
+		else if	(pv === 9) {
 			if (dv >= 2 && dv <= 6) {
 				hint = "doubling or hitting";
 			}
@@ -260,7 +258,7 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(player.handValue === 10) {
+		else if	(pv === 10) {
 			if (dv >= 2 && dv <= 9) {
 				hint = "doubling or hitting";
 			}
@@ -268,10 +266,10 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(player.handValue === 11) {
+		else if	(pv === 11) {
 			hint = "doubling or hitting";
 		}
-		else if	(player.handValue === 12) {
+		else if	(pv === 12) {
 			if (dv >= 2 && dv <= 3) {
 				hint = "hitting";
 			}
@@ -282,7 +280,7 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(player.handValue >= 13 && player.handValue <= 16) {
+		else if	(pv >= 13 && pv <= 16) {
 			if (dv >= 2 && dv <= 6) {
 				hint = "standing";
 			}
@@ -290,7 +288,7 @@ function hintButton(){
 				hint = "hitting";
 			}
 		}
-		else if	(player.handValue >= 17) {
+		else if	(pv >= 17) {
 			hint = "standing";
 		}
 		$('#winner').text("The odds recommend: " + hint);
@@ -308,7 +306,7 @@ function dealButton(){
     player.hand = [];
     player.handValue = 0;
     dealer.hand = [];
-    dv = 0;
+    dealer.handValue = 0;
     $('#playerName').text('');
     $('#dealerName').text('');
     $('#playerHand').text('');
@@ -354,25 +352,20 @@ var initialDeal = function() {
   player.hand.push(dealHand());
   $('#playerHand').append(displayCard(player.hand[player.hand.length-1]));
 
-  console.log("player hand");
-  console.log(player.hand);
-  console.log("dealer hand");
-  console.log(dealer.hand);
-
   player.handValue = handValue(player.hand);
-  dv = handValue(dealer.hand);
+  dealer.handValue = handValue(dealer.hand);
 
   $('#playerName').append(player.handValue);
-  $('#dealerName').append(dv);
+  $('#dealerName').append(dealer.handValue);
 
   player21Check();
 
   // Deal final dealer card
   dealer.hand.push(dealHand());
-  dv = handValue(dealer.hand);
+  dealer.handValue = handValue(dealer.hand);
 
   insuranceOffer()
-  dealer21Check(dv)
+  dealer21Check()
 
   standButton();
   hitButton();
@@ -399,15 +392,15 @@ function playerTurn(){
 function dealerTurn() {
   if (!(dealer.wins)) {
     $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
-    dv = handValue(dealer.hand);
-    $('#dealerName').append(' -> ' + dv);
-    while (dv < 17) {
+    dealer.handValue = handValue(dealer.hand);
+    $('#dealerName').append(' -> ' + dealer.handValue);
+    while (dealer.handValue < 17) {
       dealer.hand.push(dealHand());
       $('#dealerHand').append(displayCard(dealer.hand[dealer.hand.length-1]));
-      dv = handValue(dealer.hand);
-      $('#dealerName').append(' -> ' + dv);
+      dealer.handValue = handValue(dealer.hand);
+      $('#dealerName').append(' -> ' + dealer.handValue);
     }
-    if (dv > 21) {
+    if (dealer.handValue > 21) {
       player.wins = true;
     }
   }
