@@ -125,17 +125,18 @@ function handValue(hand){
     }
     aces--;
   }
-  console.log(value);
-  console.log(aces);
+  // console.log(value);
+  // console.log(aces);
   return value;
 }
 
-function disable_all_buttons() {
+function toggle_all_buttons() {
   button_stand.disabled = true;
   button_hit.disabled = true;
   button_double.disabled = true;
   button_split.disabled = true;
   button_hint.disabled = true;
+  button_deal.disabled = false;
 }
 
 // Player blackjack check
@@ -143,7 +144,7 @@ function player_bj_check(pv){
   if (pv === 21){
     player.blackjack = true;
     player.wins = true;
-    disable_all_buttons()
+    toggle_all_buttons()
     determine_winner();
   }
 }
@@ -161,7 +162,7 @@ function dealer_bj_check(dv){
   if (dv === 21){
     dealer.blackjack = true;
     dealer.wins = true;
-    disable_all_buttons()
+    toggle_all_buttons()
     determine_winner();
   }
 }
@@ -171,7 +172,7 @@ function stand_button(){
   $("#stand").append(button_stand);
 
   button_stand.addEventListener ("click", function() {
-    disable_all_buttons()
+    toggle_all_buttons()
     dealer_turn();
   });
 }
@@ -201,7 +202,7 @@ function double_button(){
     $('#player_hand').append(displayCard(player.hand[player.hand.length-1]));
     var pv = handValue(player.hand);
     $('#player_name').append(' -> ' + pv);
-    disable_all_buttons()
+    toggle_all_buttons()
     player_turn();
     dealer_turn();
   });
@@ -292,7 +293,27 @@ function deal_button(){
   $("#new_deal").append(button_deal);
 
   button_deal.addEventListener ("click", function() {
-    alert("deal");
+    hand_num += 1;
+    console.log(hand_num);
+    cards = [];
+    console.log(cards);
+    player.hand = [];
+    console.log(player.hand);
+    dealer.hand = [];
+    console.log(dealer.hand);
+    $('#player_hand').text('');
+    $('#dealer_hand').text('');
+    $('#winner').text('');
+    player.blackjack = false;
+    dealer.blackjack = false;
+    player.wins = false;
+    dealer.wins = false;
+    button_stand.disabled = false;
+    button_hit.disabled = false;
+    button_double.disabled = false;
+    button_split.disabled = false;
+    button_hint.disabled = false;
+    initial_deal();
   });
 }
 
@@ -310,6 +331,8 @@ function stats() {
 var initial_deal = function() {
   place_bet(1);
   create_shuffled_deck();
+  button_deal.disabled = true;
+  //console.log(cards);
 
   $('#dealer_name').text(dealer.name + "'s Hand Value: ");
   $('#player_name').text(player.name + "'s Hand Value: ");
@@ -358,7 +381,7 @@ function player_turn(){
   $('#winner').text('');
   if (handValue(player.hand) > 21) {
     dealer.wins = true;
-    disable_all_buttons()
+    toggle_all_buttons()
     determine_winner();
   }
 }
@@ -414,24 +437,9 @@ function determine_winner() {
   else{
     console.log("unknown winner")
   }
-
-  hand_num++;
-  stats();
-  // while (hand_num < 10){
-  //   var cards = [];
-  //   player.hand = [];
-  //   dealer.hand = [];
-  //   player.blackjack = false;
-  //   dealer.blackjack = false;
-  //   player.wins = false;
-  //   dealer.wins = false;
-  //   button_stand.disabled = false;
-  //   button_hit.disabled = false;
-  //   button_double.disabled = false;
-  //   button_split.disabled = false;
-  //   button_hint.disabled = false;
-  //   initial_deal();
-  // }
+  console.log(hand_num);
+  console.log("Remaining deck: ");
+  console.log(cards);
 }
 
 // Start game
