@@ -228,7 +228,7 @@ var run = (function(){
   		var dv = handValue(dealer.hand[0][0]);
   		// Player hard hand recommendations
   		// https://wizardofodds.com/games/blackjack/strategy/1-deck/ ref 10/29/17
-  		if (pv >= 4 && pv <= 7) {
+  		if (pv >= 5 && pv <= 7) {
   				hint = "hitting";
   		}
   		else if	(pv === 8) {
@@ -236,7 +236,12 @@ var run = (function(){
   				hint = "hitting";
   			}
   			else if (dv >= 5 && dv <= 6) {
-  					hint = "doubling or hitting";
+            if (player.hand.length === 2){
+              hint = "doubling";
+            }
+            else {
+              hint = "hitting";
+            }
   			}
   			else if (dv >= 7 && dv <= 11) {
   				hint = "hitting";
@@ -244,7 +249,12 @@ var run = (function(){
   		}
   		else if	(pv === 9) {
   			if (dv >= 2 && dv <= 6) {
-  				hint = "doubling or hitting";
+          if (player.hand.length === 2){
+            hint = "doubling";
+          }
+          else {
+            hint = "hitting";
+          }
   			}
   			else if (dv >= 7 && dv <= 11) {
   				hint = "hitting";
@@ -252,14 +262,24 @@ var run = (function(){
   		}
   		else if	(pv === 10) {
   			if (dv >= 2 && dv <= 9) {
-  				hint = "doubling or hitting";
+          if (player.hand.length === 2){
+            hint = "doubling";
+          }
+          else {
+            hint = "hitting";
+          }
   			}
   			else if (dv >= 10 && dv <= 11) {
   				hint = "hitting";
   			}
   		}
   		else if	(pv === 11) {
-  			hint = "doubling or hitting";
+        if (player.hand.length === 2){
+          hint = "doubling";
+        }
+        else {
+          hint = "hitting";
+        }
   		}
   		else if	(pv === 12) {
   			if (dv >= 2 && dv <= 3) {
