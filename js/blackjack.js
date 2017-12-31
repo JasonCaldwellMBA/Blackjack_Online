@@ -1,4 +1,5 @@
-var run = (function(){// Starting game stats
+var run = (function(){
+  // Starting game stats
   var cards = [];
   var amount = 0;
   var handNum = 1;

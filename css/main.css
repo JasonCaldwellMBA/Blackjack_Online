@@ -31,9 +31,9 @@ body {
 }
 
 button {
-  line-height: 60px;
+  line-height: 75px;
   font-weight: bold;
-  padding: 0 40px;
+  padding: 0 50px;
   background: lightblue;
   margin: 10px;
   border-radius: 5px;
