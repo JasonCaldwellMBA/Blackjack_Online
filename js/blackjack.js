@@ -25,17 +25,17 @@ var run = (function(){
 
   //Create action/event buttons
   var buttonStand = document.createElement("button");
-  buttonStand.innerHTML = "Stand";
+  buttonStand.innerHTML = "<u>S</u>tand";  // 'S' is one keyboard shortcut
   var buttonHit = document.createElement("button");
-  buttonHit.innerHTML = "Hit";
+  buttonHit.innerHTML = "<u>H</u>it";  // 'H' is one keyboard shortcut
   var buttonDouble = document.createElement("button");
-  buttonDouble.innerHTML = "Double";
+  buttonDouble.innerHTML = "<u>D</u>ouble";  // 'D' is one keyboard shortcut
   var buttonSplit = document.createElement("button");
-  buttonSplit.innerHTML = "Split";
+  buttonSplit.innerHTML = "S<u>p</u>lit";  // 'p' is one keyboard shortcut
   var buttonTip = document.createElement("button");
-  buttonTip.innerHTML = "Tip";
+  buttonTip.innerHTML = "<u>T</u>ip";  // 'T' is one keyboard shortcut
   var buttonDeal = document.createElement("button");
-  buttonDeal.innerHTML = "Deal";
+  buttonDeal.innerHTML = "D<u>e</u>al";  // 'e' is one keyboard shortcut
 
   // Place bet - Will be interactive in future
   function placeBet(multiple){
