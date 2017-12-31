@@ -319,6 +319,26 @@ var run = (function(){
     });
   }
 
+  function displayKB(event){
+    event.stopImmediatePropagation();
+    switch(event.which){
+      case 115: case 83: case 49:  // 's', 'S', '1'
+        buttonStand.click(); break;
+      case 104: case 72: case 50:  // 'h', 'H', '2'
+        buttonHit.click(); break;
+      case 100: case 68: case 51:  // 'd', 'D', '3'
+        buttonDouble.click(); break;
+      case 112: case 80: case 52:  // 'p', 'P', '4'
+        buttonSplit.click(); break;
+      case 116: case 84: case 53:  // 't', 'T', '5'
+        buttonTip.click(); break;
+      case 101: case 69: case 54: case 13:  // 'e', 'E', '6', enter
+        buttonDeal.click(); break;
+      default:
+        alert('Unknown key pressed. Please try again.');
+    }
+  };
+
   // Show hand number
   function displayHandNum() {
     $('#handNum').children().text('');
@@ -377,6 +397,7 @@ var run = (function(){
     }
     tipButton();
     dealButton();
+    $(document).keypress(displayKB);
   };
 
   // Since the player has to act first the dealer automatically wins when the player goes over 21
