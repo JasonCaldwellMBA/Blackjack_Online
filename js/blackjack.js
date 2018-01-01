@@ -11,6 +11,7 @@ var run = (function(){
     betSize: 2,
     hand: [],
     handValue: 0,
+    softHand: false,
     wins: false,
     blackjack: false
   };
@@ -19,6 +20,7 @@ var run = (function(){
     name: 'Dealer',
     hand: [],
     handValue: 0,
+    softHand: false,
     wins: false,
     blackjack: false
   };
@@ -122,8 +124,10 @@ var run = (function(){
       }
     }
     while (aces > 0){
+      hand.softHand = true;
       if (value > 21){
         value -= 10;
+        hand.softHand = false;
       }
       aces--;
     }
@@ -222,16 +226,12 @@ var run = (function(){
 
     buttonTip.addEventListener ("click", function(event) {
       event.stopImmediatePropagation();
-      // Note: player soft hand has slightly different odds; but for this game we are using the same hints for both.
-  		// Same for split hands.
+      // https://wizardofodds.com/games/blackjack/strategy/1-deck/ ref 10/29/17
+      var hint = '';
   		var pv = handValue(player.hand);
   		var dv = handValue(dealer.hand[0][0]);
-  		// Player hard hand recommendations
-  		// https://wizardofodds.com/games/blackjack/strategy/1-deck/ ref 10/29/17
-      console.log(player.hand.aces);
-      // Soft hand odds
-      if (player.hand.aces > 0){
-        console.log("soft");
+      // Player soft hand recommendations
+      if (player.hand.softHand){
         if (pv >= 13 && pv <= 16) {
           if (dv >= 2 && dv <= 3) {
             hint = "hitting";
@@ -300,9 +300,8 @@ var run = (function(){
     			hint = "standing";
     		}
       }
-      // hard hand odds
+      // Player hard hand recommendations
       else {
-        console.log("hard");
         if (pv >= 5 && pv <= 7) {
     				hint = "hitting";
     		}
@@ -393,9 +392,11 @@ var run = (function(){
       handNum++;
       cards = [];
       player.hand = [];
-      player.handValue = 0;
       dealer.hand = [];
+      player.handValue = 0;
       dealer.handValue = 0;
+      player.softHand = false;
+      dealer.softHand = false;
       amount = 0;
       $('#playerName').text('');
       $('#dealerName').text('');
