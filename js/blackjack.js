@@ -228,81 +228,157 @@ var run = (function(){
   		var dv = handValue(dealer.hand[0][0]);
   		// Player hard hand recommendations
   		// https://wizardofodds.com/games/blackjack/strategy/1-deck/ ref 10/29/17
-  		if (pv >= 5 && pv <= 7) {
-  				hint = "hitting";
-  		}
-  		else if	(pv === 8) {
-  			if (dv >= 2 && dv <= 4) {
-  				hint = "hitting";
-  			}
-  			else if (dv >= 5 && dv <= 6) {
+      console.log(player.hand.aces);
+      // Soft hand odds
+      if (player.hand.aces > 0){
+        console.log("soft");
+        if (pv >= 13 && pv <= 16) {
+          if (dv >= 2 && dv <= 3) {
+            hint = "hitting";
+          }
+          else if (dv >= 4 && dv <= 6) {
+              if (player.hand.length === 2){
+                hint = "doubling";
+              }
+              else {
+                hint = "hitting";
+              }
+    			}
+    			else if (dv >= 7 && dv <= 11) {
+    				hint = "hitting";
+    			}
+    		}
+    		else if	(pv === 17) {
+    			if (dv >= 2 && dv <= 6) {
+              if (player.hand.length === 2){
+                hint = "doubling";
+              }
+              else {
+                hint = "hitting";
+              }
+    			}
+    			else if (dv >= 7 && dv <= 11) {
+    				hint = "hitting";
+    			}
+    		}
+    		else if	(pv === 18) {
+          if (dv === 2){
+            hint = "standing";
+          }
+          else if (dv >= 3 && dv <= 6) {
+            if (player.hand.length === 2){
+              hint = "doubling";
+            }
+            else {
+              hint = "standing";
+            }
+    			}
+    			else if (dv >= 7 && dv <= 8) {
+    				hint = "standing";
+    			}
+    			else if (dv >= 9 && dv <= 11) {
+    				hint = "hitting";
+    			}
+    		}
+    		else if	(pv === 19) {
+          if (dv >= 2 && dv <= 5) {
+            hint = "standing";
+          }
+    			else if (dv === 6) {
+            if (player.hand.length === 2){
+              hint = "doubling";
+            }
+            else {
+              hint = "standing";
+            }
+    			}
+    			else if (dv >= 7 && dv <= 11) {
+    				hint = "standing";
+    			}
+    		}
+    		else if	(pv >= 20) {
+    			hint = "standing";
+    		}
+      }
+      // hard hand odds
+      else {
+        console.log("hard");
+        if (pv >= 5 && pv <= 7) {
+    				hint = "hitting";
+    		}
+    		else if	(pv === 8) {
+    			if (dv >= 2 && dv <= 4) {
+    				hint = "hitting";
+    			}
+    			else if (dv >= 5 && dv <= 6) {
+              if (player.hand.length === 2){
+                hint = "doubling";
+              }
+              else {
+                hint = "hitting";
+              }
+    			}
+    			else if (dv >= 7 && dv <= 11) {
+    				hint = "hitting";
+    			}
+    		}
+    		else if	(pv === 9) {
+    			if (dv >= 2 && dv <= 6) {
             if (player.hand.length === 2){
               hint = "doubling";
             }
             else {
               hint = "hitting";
             }
-  			}
-  			else if (dv >= 7 && dv <= 11) {
-  				hint = "hitting";
-  			}
-  		}
-  		else if	(pv === 9) {
-  			if (dv >= 2 && dv <= 6) {
+    			}
+    			else if (dv >= 7 && dv <= 11) {
+    				hint = "hitting";
+    			}
+    		}
+    		else if	(pv === 10) {
+    			if (dv >= 2 && dv <= 9) {
+            if (player.hand.length === 2){
+              hint = "doubling";
+            }
+            else {
+              hint = "hitting";
+            }
+    			}
+    			else if (dv >= 10 && dv <= 11) {
+    				hint = "hitting";
+    			}
+    		}
+    		else if	(pv === 11) {
           if (player.hand.length === 2){
             hint = "doubling";
           }
           else {
             hint = "hitting";
           }
-  			}
-  			else if (dv >= 7 && dv <= 11) {
-  				hint = "hitting";
-  			}
-  		}
-  		else if	(pv === 10) {
-  			if (dv >= 2 && dv <= 9) {
-          if (player.hand.length === 2){
-            hint = "doubling";
-          }
-          else {
-            hint = "hitting";
-          }
-  			}
-  			else if (dv >= 10 && dv <= 11) {
-  				hint = "hitting";
-  			}
-  		}
-  		else if	(pv === 11) {
-        if (player.hand.length === 2){
-          hint = "doubling";
-        }
-        else {
-          hint = "hitting";
-        }
-  		}
-  		else if	(pv === 12) {
-  			if (dv >= 2 && dv <= 3) {
-  				hint = "hitting";
-  			}
-  			else if (dv >= 4 && dv <= 6) {
-  				hint = "standing";
-  			}
-  			else if (dv >= 7 && dv <= 11) {
-  				hint = "hitting";
-  			}
-  		}
-  		else if	(pv >= 13 && pv <= 16) {
-  			if (dv >= 2 && dv <= 6) {
-  				hint = "standing";
-  			}
-  			else if (dv >= 7 && dv <= 11) {
-  				hint = "hitting";
-  			}
-  		}
-  		else if	(pv >= 17) {
-  			hint = "standing";
-  		}
+    		}
+    		else if	(pv === 12) {
+    			if (dv >= 2 && dv <= 3) {
+    				hint = "hitting";
+    			}
+    			else if (dv >= 4 && dv <= 6) {
+    				hint = "standing";
+    			}
+    			else if (dv >= 7 && dv <= 11) {
+    				hint = "hitting";
+    			}
+    		}
+    		else if	(pv >= 13 && pv <= 16) {
+    			if (dv >= 2 && dv <= 6) {
+    				hint = "standing";
+    			}
+    			else if (dv >= 7 && dv <= 11) {
+    				hint = "hitting";
+    			}
+    		}
+    		else if	(pv >= 17) {
+    			hint = "standing";
+    		}
+      }
   		$('#winner').children().text("The odds recommend: " + hint);
       return hint;
     });
