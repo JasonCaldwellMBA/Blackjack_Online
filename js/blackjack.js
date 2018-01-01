@@ -230,9 +230,13 @@ var run = (function(){
       var hint = '';
   		var pv = handValue(player.hand);
   		var dv = handValue(dealer.hand[0][0]);
-      // Player soft hand recommendations
+      // =========== Player soft hand recommendations ===========
       if (player.hand.softHand){
-        if (pv >= 13 && pv <= 16) {
+        // player hand A, A (potential split)
+        if (pv === 12) {
+          hint = "splitting";
+        }
+        else if (pv >= 13 && pv <= 16) {
           if (dv >= 2 && dv <= 3) {
             hint = "hitting";
           }
@@ -300,13 +304,45 @@ var run = (function(){
     			hint = "standing";
     		}
       }
-      // Player hard hand recommendations
+      // =========== Player hard hand recommendations ===========
       else {
-        if (pv >= 5 && pv <= 7) {
+        // Can only get a 4 value with 2 2s (a potential split hand)
+        if (pv === 4) {
+          if (dv >= 2 && dv <= 7) {
+    				hint = "splitting";
+    			}
+          else if (dv >= 8 && dv <= 11) {
     				hint = "hitting";
+    			}
+        }
+        else if (pv >= 5 && pv <= 7) {
+          // player hand 3, 3 (potential split)
+          if (player.hand[0][0] === player.hand[1][0]) {
+            if (dv >= 2 && dv <= 8) {
+      				hint = "splitting";
+      			}
+            else if (dv >= 9 && dv <= 11) {
+      				hint = "hitting";
+      			}
+          }
+          else {
+            hint = "hitting";
+          }
     		}
     		else if	(pv === 8) {
-    			if (dv >= 2 && dv <= 4) {
+          // player hand 4, 4 (potential split)
+          if (player.hand[0][0] === player.hand[1][0]) {
+            if (dv >= 2 && dv <= 3) {
+      				hint = "hitting";
+      			}
+            else if (dv >= 4 && dv <= 6) {
+      				hint = "splitting";
+      			}
+            else if (dv >= 7 && dv <= 11) {
+      				hint = "hitting";
+      			}
+          }
+          else if (dv >= 2 && dv <= 4) {
     				hint = "hitting";
     			}
     			else if (dv >= 5 && dv <= 6) {
@@ -335,6 +371,7 @@ var run = (function(){
     			}
     		}
     		else if	(pv === 10) {
+          // player hand 5, 5 (potential split); but uses same recommendations as any other 10 hand
     			if (dv >= 2 && dv <= 9) {
             if (player.hand.length === 2){
               hint = "doubling";
@@ -356,7 +393,16 @@ var run = (function(){
           }
     		}
     		else if	(pv === 12) {
-    			if (dv >= 2 && dv <= 3) {
+          // player hand 6, 6 (potential split)
+          if (player.hand[0][0] === player.hand[1][0]) {
+            if (dv >= 2 && dv <= 7) {
+      				hint = "splitting";
+      			}
+            else if (dv >= 8 && dv <= 11) {
+      				hint = "hitting";
+      			}
+          }
+          else if (dv >= 2 && dv <= 3) {
     				hint = "hitting";
     			}
     			else if (dv >= 4 && dv <= 6) {
@@ -366,17 +412,59 @@ var run = (function(){
     				hint = "hitting";
     			}
     		}
-    		else if	(pv >= 13 && pv <= 16) {
-    			if (dv >= 2 && dv <= 6) {
+    		else if	(pv >= 13 && pv <= 15) {
+          // player hand 7, 7 (potential split)
+          if (player.hand[0][0] === player.hand[1][0]) {
+            if (dv >= 2 && dv <= 8) {
+      				hint = "splitting";
+      			}
+            else if (dv === 9) {
+      				hint = "hitting";
+      			}
+            else if (dv === 10) {
+      				hint = "standing";
+      			}
+            else if (dv === 11) {
+      				hint = "hitting";
+      			}
+          }
+          else if (dv >= 2 && dv <= 6) {
     				hint = "standing";
     			}
     			else if (dv >= 7 && dv <= 11) {
     				hint = "hitting";
     			}
     		}
-    		else if	(pv >= 17) {
-    			hint = "standing";
+    		else if	(pv === 16) {
+          // player hand 8, 8 (potential split)
+          if (player.hand[0][0] === player.hand[1][0]) {
+      			hint = "splitting";
+          }
+    			else if (dv >= 2 && dv <= 6) {
+    				hint = "standing";
+    			}
+    			else if (dv >= 7 && dv <= 11) {
+    				hint = "hitting";
+    			}
     		}
+    		else if	(pv >= 17 && pv <= 19) {
+          // player hand 9, 9 (potential split)
+          if (player.hand[0][0] === player.hand[1][0]) {
+            if (dv >= 2 && dv <= 6 || dv === 8 || dv === 9 || dv === 11) {
+      				hint = "splitting";
+      			}
+            else if (dv === 7 || dv === 10) {
+      				hint = "standing";
+      			}
+          }
+          else {
+            hint = "standing";
+          }
+    		}
+        else if (pv >= 20) {
+          // player hand 10, 10 (potential split); but uses same recommendations as any other 20 hand
+          hint = "standing";
+        }
       }
   		$('#winner').children().text("The odds recommend: " + hint);
       return hint;
