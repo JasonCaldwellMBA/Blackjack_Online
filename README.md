@@ -15,7 +15,7 @@ A player is given a fixed stack size for their session. Each hand (round) consis
   * Stand: keep their current point total and end their turn.
   * Double: double their bet size and get one more card.
   * Split: split their one hand into 2 hands. This is only allowed when the cards are the same rank.
-  * Tip: get a hint about what the correct decision is based off of the mathematical odds. There are many decisions that are not obvious in blackjack (which is profitable for the casinos and why the game is offered everywhere).
+  * Tip: get a hint about what the correct decision is based off of the mathematical odds. Tips are offered for hard, soft, and split hands. There are many decisions that are not obvious in blackjack (which is profitable for the casinos and why the game is offered everywhere).
   * Deal: deal a new round. This option is only available after the hand has ended.
 * If the player busts (goes over 21) the dealer wins.
 * Otherwise, once the player stands the dealer has to hit until they have a total of 17 or more.
@@ -36,6 +36,16 @@ A player is given a fixed stack size for their session. Each hand (round) consis
 * JavaScript Objects
 * Event Driven Programming
   * Hit, Stand, Double, Split, Tip, Deal
+* Keyboard Shortcuts
+  * Hit: 'h', 'H', and 1
+  * Stand: 's', 'S', and 2
+  * Double: 'd', 'D', and 3
+  * Split: 'p', 'P', and 4
+  * Tip: 't', 'T', and 5
+  * Deal: 'e', 'E', 6, and enter
+
+### Future Enhancements
+* Complete split functionality
 
 ### Licensing
 See the file called LICENSE.
