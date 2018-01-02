@@ -233,7 +233,7 @@ var run = (function(){
       // =========== Player soft hand recommendations ===========
       if (player.hand.softHand){
         // player hand A, A (potential split)
-        if (pv === 12) {
+        if (pv === 12 && player.hand.length === 2) {
           hint = "splitting";
         }
         else if (pv >= 13 && pv <= 16) {
@@ -307,7 +307,7 @@ var run = (function(){
       // =========== Player hard hand recommendations ===========
       else {
         // Can only get a 4 value with 2 2s (a potential split hand)
-        if (pv === 4) {
+        if (pv === 4 && player.hand.length === 2) {
           if (dv >= 2 && dv <= 7) {
     				hint = "splitting";
     			}
@@ -317,7 +317,7 @@ var run = (function(){
         }
         else if (pv >= 5 && pv <= 7) {
           // player hand 3, 3 (potential split)
-          if (player.hand[0][0] === player.hand[1][0]) {
+          if (player.hand[0][0] === player.hand[1][0] && player.hand.length === 2) {
             if (dv >= 2 && dv <= 8) {
       				hint = "splitting";
       			}
@@ -331,7 +331,7 @@ var run = (function(){
     		}
     		else if	(pv === 8) {
           // player hand 4, 4 (potential split)
-          if (player.hand[0][0] === player.hand[1][0]) {
+          if (player.hand[0][0] === player.hand[1][0] && player.hand.length === 2) {
             if (dv >= 2 && dv <= 3) {
       				hint = "hitting";
       			}
@@ -394,7 +394,7 @@ var run = (function(){
     		}
     		else if	(pv === 12) {
           // player hand 6, 6 (potential split)
-          if (player.hand[0][0] === player.hand[1][0]) {
+          if (player.hand[0][0] === player.hand[1][0] && player.hand.length === 2) {
             if (dv >= 2 && dv <= 7) {
       				hint = "splitting";
       			}
@@ -414,7 +414,7 @@ var run = (function(){
     		}
     		else if	(pv >= 13 && pv <= 15) {
           // player hand 7, 7 (potential split)
-          if (player.hand[0][0] === player.hand[1][0]) {
+          if (player.hand[0][0] === player.hand[1][0] && player.hand.length === 2) {
             if (dv >= 2 && dv <= 8) {
       				hint = "splitting";
       			}
@@ -437,7 +437,7 @@ var run = (function(){
     		}
     		else if	(pv === 16) {
           // player hand 8, 8 (potential split)
-          if (player.hand[0][0] === player.hand[1][0]) {
+          if (player.hand[0][0] === player.hand[1][0] && player.hand.length === 2) {
       			hint = "splitting";
           }
     			else if (dv >= 2 && dv <= 6) {
@@ -449,7 +449,7 @@ var run = (function(){
     		}
     		else if	(pv >= 17 && pv <= 19) {
           // player hand 9, 9 (potential split)
-          if (player.hand[0][0] === player.hand[1][0]) {
+          if (player.hand[0][0] === player.hand[1][0] && player.hand.length === 2) {
             if (dv >= 2 && dv <= 6 || dv === 8 || dv === 9) {
       				hint = "splitting";
       			}
