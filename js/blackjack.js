@@ -277,10 +277,10 @@ var run = (function(){
               hint = "standing";
             }
     			}
-    			else if (dv >= 7 && dv <= 8) {
+    			else if (dv >= 7 && dv <= 8 || dv === 11) {
     				hint = "standing";
     			}
-    			else if (dv >= 9 && dv <= 11) {
+    			else if (dv >= 9 && dv <= 10) {
     				hint = "hitting";
     			}
     		}
@@ -450,10 +450,10 @@ var run = (function(){
     		else if	(pv >= 17 && pv <= 19) {
           // player hand 9, 9 (potential split)
           if (player.hand[0][0] === player.hand[1][0]) {
-            if (dv >= 2 && dv <= 6 || dv === 8 || dv === 9 || dv === 11) {
+            if (dv >= 2 && dv <= 6 || dv === 8 || dv === 9) {
       				hint = "splitting";
       			}
-            else if (dv === 7 || dv === 10) {
+            else if (dv === 7 || dv === 10 || dv === 11) {
       				hint = "standing";
       			}
           }
