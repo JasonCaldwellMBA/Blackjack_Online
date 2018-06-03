@@ -39,7 +39,7 @@ button {
   border-radius: 5px;
 }
 
-button:hover {
+button:hover:enabled {
   background: blue;
   color: white;
 }
