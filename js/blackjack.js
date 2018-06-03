@@ -34,8 +34,8 @@ var run = (function(){
   buttonDouble.innerHTML = "<u>D</u>ouble";  // 'D' is one keyboard shortcut
   var buttonSplit = document.createElement("button");
   buttonSplit.innerHTML = "S<u>p</u>lit";  // 'p' is one keyboard shortcut
-  var buttonTip = document.createElement("button");
-  buttonTip.innerHTML = "<u>T</u>ip";  // 'T' is one keyboard shortcut
+  var buttonOdds = document.createElement("button");
+  buttonOdds.innerHTML = "<u>O</u>dds";  // 'O' is one keyboard shortcut
   var buttonDeal = document.createElement("button");
   buttonDeal.innerHTML = "D<u>e</u>al";  // 'e' is one keyboard shortcut
 
@@ -139,7 +139,7 @@ var run = (function(){
     buttonHit.disabled = true;
     buttonDouble.disabled = true;
     buttonSplit.disabled = true;
-    buttonTip.disabled = true;
+    buttonOdds.disabled = true;
     buttonDeal.disabled = false;
   }
 
@@ -220,11 +220,11 @@ var run = (function(){
     });
   }
 
-  // Create Tip (odd calculation helper) event
-  function tipButton(){
-    $("#tip").append(buttonTip);
+  // Create Odds (calculation helper) event
+  function oddsButton(){
+    $("#odds").append(buttonOdds);
 
-    buttonTip.addEventListener ("click", function(event) {
+    buttonOdds.addEventListener ("click", function(event) {
       event.stopImmediatePropagation();
       // https://wizardofodds.com/games/blackjack/strategy/1-deck/ ref 10/29/17
       var hint = '';
@@ -466,7 +466,7 @@ var run = (function(){
           hint = "standing";
         }
       }
-  		$('#winner').children().text("The odds recommend: " + hint);
+  		$('#winner').children().text("Recommend " + hint);
       return hint;
     });
   }
@@ -499,7 +499,7 @@ var run = (function(){
       buttonHit.disabled = false;
       buttonDouble.disabled = false;
       buttonSplit.disabled = false;
-      buttonTip.disabled = false;
+      buttonOdds.disabled = false;
       initialDeal();
     });
   }
@@ -515,8 +515,8 @@ var run = (function(){
         buttonDouble.click(); break;
       case 112: case 80: case 52:  // 'p', 'P', '4'
         buttonSplit.click(); break;
-      case 116: case 84: case 53:  // 't', 'T', '5'
-        buttonTip.click(); break;
+      case 111: case 79: case 53:  // 'o', 'O', '5'
+        buttonOdds.click(); break;
       case 101: case 69: case 54: case 13:  // 'e', 'E', '6', enter
         buttonDeal.click(); break;
       default:
@@ -580,7 +580,7 @@ var run = (function(){
     if (!(player.hand[0][0] === player.hand[1][0])){
       buttonSplit.disabled = true;
     }
-    tipButton();
+    oddsButton();
     dealButton();
     $(document).keypress(displayKB);
   };
