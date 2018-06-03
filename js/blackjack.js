@@ -3,6 +3,7 @@ var run = (function(){
   var cards = [];
   var amount = 0;
   var handNum = 1;
+  var plusEV = 0;
 
   // Create player and dealer
   var player = {
@@ -13,7 +14,7 @@ var run = (function(){
     handValue: 0,
     softHand: false,
     wins: false,
-    blackjack: false
+    blackjack: false,
   };
 
   var dealer = {
@@ -530,6 +531,12 @@ var run = (function(){
     $('#handNum').children().text('Hand Number: ' + handNum);
   }
 
+  // Show positive expected value decisions
+  function displayEV() {
+    $('#ev').children().text('');
+    $('#ev').children().text('+EV Decisions: ' + plusEV + '\nCorrect %: ' + plusEV/handNum);
+  }
+
   // Show player bankroll (total amount of money the player has for the session)
   function displayBankroll() {
     $('#bankroll').children().text('');
@@ -539,6 +546,7 @@ var run = (function(){
   // Setup game
   var initialDeal = function() {
     displayHandNum();
+    displayEV();
     displayBankroll();
     amount = placeBet(1);
     createShuffledDeck();

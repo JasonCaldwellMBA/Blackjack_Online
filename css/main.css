@@ -20,7 +20,7 @@ body {
   text-align: center;
 }
 
-.stats, #bet {
+.stats, #bet, #ev {
   color: yellow;
   text-align: center;
 }
