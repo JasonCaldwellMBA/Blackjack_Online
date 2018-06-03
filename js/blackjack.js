@@ -33,11 +33,11 @@ var run = (function(){
   var buttonDouble = document.createElement("button");
   buttonDouble.innerHTML = "<u>D</u>ouble";  // 'D' is one keyboard shortcut
   var buttonSplit = document.createElement("button");
-  buttonSplit.innerHTML = "S<u>p</u>lit";  // 'p' is one keyboard shortcut
+  buttonSplit.innerHTML = "S<u>p</u>lit";  // 'P' is one keyboard shortcut
   var buttonOdds = document.createElement("button");
   buttonOdds.innerHTML = "<u>O</u>dds";  // 'O' is one keyboard shortcut
   var buttonDeal = document.createElement("button");
-  buttonDeal.innerHTML = "D<u>e</u>al";  // 'e' is one keyboard shortcut
+  buttonDeal.innerHTML = "<u>N</u>ext Hand";  // 'N' is one keyboard shortcut
 
   // Place bet - Will be interactive in future
   function placeBet(multiple){
@@ -517,7 +517,7 @@ var run = (function(){
         buttonSplit.click(); break;
       case 111: case 79: case 53:  // 'o', 'O', '5'
         buttonOdds.click(); break;
-      case 101: case 69: case 54: case 13:  // 'e', 'E', '6', enter
+      case 110: case 78: case 54: case 13:  // 'n', 'N', '6', enter
         buttonDeal.click(); break;
       default:
         alert('Unknown key pressed. Please try again.');
