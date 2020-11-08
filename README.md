@@ -49,6 +49,3 @@ A player is given a fixed stack size for their session. Each hand (round) consis
 
 ### Licensing
 See the file called LICENSE.
-
-### About the developer
-To see additional information and other projects please visit my [personal website](http://jdcald13.com).
